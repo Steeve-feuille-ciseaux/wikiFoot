@@ -1,0 +1,28 @@
+<!-- joueurs/templates/joueurs/joueur_detail.html -->
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Détails du joueur - {{ joueur.prenom }} {{ joueur.nom }}</title>
+</head>
+<body>
+    <h1>{{ joueur.prenom }} {{ joueur.nom }}</h1>
+
+    <img src="{{ joueur.image.url }}" alt="Photo de {{ joueur.prenom }} {{ joueur.nom }}" width="200">
+
+    <ul>
+        <li><strong>Nom :</strong> {{ joueur.nom }}</li>
+        <li><strong>Prénom :</strong> {{ joueur.prenom }}</li>
+        <li><strong>Date de naissance :</strong> {{ joueur.date_naissance }}</li>
+        <li><strong>Position :</strong> {{ joueur.position }}</li>
+        <li><strong>Numéro :</strong> {{ joueur.numero }}</li>
+        <li><strong>Club :</strong> {{ joueur.club }}</li>
+        <li><strong>Pays :</strong> {{ joueur.pays }}</li>
+    </ul>
+
+    <h2>Résumé</h2>
+    <p>{{ joueur.resume }}</p>
+</body>
+</html>
