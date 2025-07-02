@@ -1,6 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Joueur
 
+from django.shortcuts import render
+
+def home(request):
+    return render(request, 'base.html')
+
 def liste_joueurs(request):
     joueurs = Joueur.objects.all()  # récupère tous les joueurs en base
     return render(request, 'joueurs/liste_joueurs.html', {'joueurs': joueurs})
