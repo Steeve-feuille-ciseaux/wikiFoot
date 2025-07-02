@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Modifier le joueur {{ joueur.prenom }} {{ joueur.nom }}{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="mb-4">Modifier le joueur {{ joueur.prenom }} {{ joueur.nom }}</h2>
+
+    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.prenom.label_tag }}
+                {{ form.prenom }}
+                {% if form.prenom.errors %}
+                    <div class="text-danger small">{{ form.prenom.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.nom.label_tag }}
+                {{ form.nom }}
+                {% if form.nom.errors %}
+                    <div class="text-danger small">{{ form.nom.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.date_naissance.label_tag }}
+                {{ form.date_naissance }}
+                {% if form.date_naissance.errors %}
+                    <div class="text-danger small">{{ form.date_naissance.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.pays.label_tag }}
+                {{ form.pays }}
+                {% if form.pays.errors %}
+                    <div class="text-danger small">{{ form.pays.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.position.label_tag }}
+                {{ form.position }}
+                {% if form.position.errors %}
+                    <div class="text-danger small">{{ form.position.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.numero.label_tag }}
+                {{ form.numero }}
+                {% if form.numero.errors %}
+                    <div class="text-danger small">{{ form.numero.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.club.label_tag }}
+                {{ form.club }}
+                {% if form.club.errors %}
+                    <div class="text-danger small">{{ form.club.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                <!-- Pas d'équivalent "worldCups", donc vide -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-3">
+                {{ form.image.label_tag }}
+                {{ form.image }}
+                <small class="form-text text-muted">
+                    Formats acceptés : JPG, PNG. Taille maximale : 1MB
+                </small>
+                {% if form.image.errors %}
+                    <div class="text-danger small">{{ form.image.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-3">
+                {{ form.resume.label_tag }}
+                {{ form.resume }}
+                {% if form.resume.errors %}
+                    <div class="text-danger small">{{ form.resume.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">
+            {{ button_label|default:"Mettre à jour" }}
+        </button>
+    </form>
+</div>
+{% endblock %}

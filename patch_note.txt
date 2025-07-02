@@ -1,0 +1,4 @@
+v0.01.0 = CRUD joueur finalisé avec interface 
+
+** REVENIR **
+bug sur retour en arrière après supprésion d'un joueur -> revoir le retour après un delete
