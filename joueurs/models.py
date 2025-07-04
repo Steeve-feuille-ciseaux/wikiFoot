@@ -34,3 +34,32 @@ class Joueur(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+class Card(models.Model):
+    joueur = models.ForeignKey('Joueur', on_delete=models.SET_NULL, null=True, blank=True, related_name='cards')
+    name = models.CharField(max_length=100)
+    numero = models.IntegerField()
+    position = models.CharField(max_length=100)
+    club = models.ForeignKey('Club', on_delete=models.CASCADE, related_name='cards')
+    action = models.CharField(max_length=100)
+    gif = models.ImageField(upload_to='Gifs/', null=True, blank=True)
+    resume = models.TextField()
+    statut = models.BooleanField(default=True)
+    stade = models.CharField(max_length=100)
+    match = models.CharField(max_length=100)
+    date = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.club.name} - {self.action}"
+    
+class Club(models.Model):
+    name = models.CharField(max_length=100)
+    blazon = models.ImageField(upload_to='Blazon/', null=True, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='clubs')
+    story = models.TextField(unique=True)
+    rival = models.OneToOneField('self', on_delete=models.SET_NULL, null=True, blank=True)
+    # card_player = models.OneToOneField(Card, on_delete=models.SET_NULL, null=True, blank=True, unique=True)
+    stade = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
