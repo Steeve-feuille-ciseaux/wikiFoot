@@ -1,4 +1,6 @@
 v0.01.0 = CRUD joueur finalisé avec interface 
+v0.01.1 = Création table Continent et Pays, Refonte de la table joueur
 
 ** REVENIR **
 bug sur retour en arrière après supprésion d'un joueur -> revoir le retour après un delete
+Remettre a joueurs les templates car les valeur joueurs ont été changé
