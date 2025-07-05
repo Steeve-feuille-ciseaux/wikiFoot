@@ -1,6 +1,7 @@
 v0.01.0 = CRUD joueur finalisé avec interface 
 v0.01.1 = Création table Continent et Country, Refonte de la table joueur
 v0.01.2 = Création table Cards et Club
+v0.01.3 = Création table NationalTeam, Competition, CompetitionWin, SelectionTeam, Award, AwardWin
 
 ** REVENIR **
 bug sur retour en arrière après supprésion d'un joueur -> revoir le retour après un delete
@@ -11,6 +12,6 @@ python -m venv env
 env\Scripts\activate
 deactivate
 python manage.py createsuperuser
-python manage.py migrate
 python manage.py makemigrations
+python manage.py migrate
 python manage.py runserver
