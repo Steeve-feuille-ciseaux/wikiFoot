@@ -131,7 +131,12 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="#">Mon profil</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+                                <li><form method="post" action="{% url 'logout' %}" style="display: inline;">
+    {% csrf_token %}
+    <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0; color: inherit;">
+        Déconnexion
+    </button>
+</form></li>
                             </ul>
                         </div>
                     {% else %}
@@ -140,7 +145,7 @@
                                 <i class="fa-solid fa-user-large"></i> Compte
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#">Se connecter</a></li>
+                                <li><a class="dropdown-item" href="{% url 'login' %}">Se connecter</a></li>
                                 <li><a class="dropdown-item" href="#">Créer un compte</a></li>
                             </ul>
                         </div>
@@ -180,5 +185,6 @@
     </div>
 </footer>
 
-<!-- Bootstrap Bundle with Popper -->
-<script src="https://cdn
+<!-- Bootstrap Bundle with Popper.js (nécessaire pour les dropdowns) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+

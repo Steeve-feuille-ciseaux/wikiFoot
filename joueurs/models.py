@@ -65,7 +65,16 @@ class Club(models.Model):
     stade = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name
+        return self.name   
+    
+class LineUp(models.Model):
+    club = models.ForeignKey('Club', on_delete=models.CASCADE, related_name='line_up', null=True, blank=True)
+    championship = models.ForeignKey('Championship', on_delete=models.CASCADE, related_name='line_up')
+    photo = models.ImageField(upload_to='lineUp/', null=True, blank=True)
+    resume = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.club.name} - {self.championship.name} {self.championship.date}"
     
 class NationalTeam(models.Model):
     name = models.CharField(max_length=100)
@@ -76,6 +85,27 @@ class NationalTeam(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Championship(models.Model):
+    name = models.CharField(max_length=100)  # correspond à id_name    
+    date = models.PositiveIntegerField(default=1998)
+    logo = models.ImageField(upload_to='championship/', null=True, blank=True)  
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, blank=True, related_name='championships')
+    continent = models.ForeignKey(Continent, on_delete=models.SET_NULL, null=True, blank=True, related_name='championships')
+
+    def __str__(self):
+        return f"{self.name} {self.date}"
+    
+class ChampionshipWin(models.Model):
+    player = models.ForeignKey('Joueur', on_delete=models.CASCADE, related_name='championship_wins')
+    championship = models.ForeignKey('Championship', on_delete=models.CASCADE, related_name='wins')
+    line_up = models.OneToOneField('LineUp', on_delete=models.SET_NULL, null=True, blank=True, related_name='championship_win')
+    date = models.PositiveIntegerField(default=2016)
+    old = models.IntegerField()  # âge du joueur au moment de la victoire
+    # team = models.ForeignKey('NationalTeam', on_delete=models.SET_NULL, null=True, blank=True, related_name='competition_wins')
+
+    def __str__(self):
+        return f"{self.player.first_name} {self.player.last_name} - {self.championship.name} ({self.date})"
     
 class Competition(models.Model):
     name = models.CharField(max_length=100)  # correspond à id_name    

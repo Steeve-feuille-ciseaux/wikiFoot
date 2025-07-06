@@ -2,8 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from .models import Joueur
 from .forms import JoueurForm
+from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render
+
+@login_required
+def dashboard(request):
+    return render(request, 'base.html')
 
 def home(request):
     return render(request, 'base.html')
