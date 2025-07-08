@@ -3,10 +3,12 @@ v0.01.1 = Création table Continent et Country, Refonte de la table joueur
 v0.01.2 = Création table Cards et Club
 v0.01.3 = Création table NationalTeam, Competition, CompetitionWin, SelectionTeam, Award, AwardWin
 v0.01.4 = Création table LineUp, Championship, ChampionshipWin + préparation authentification
+v0.01.5 = Création table Move, Type
 
 ** Next step **
-finir d'inclure la DB projectFootball-NationalTeam
-réfléchir à la DB action notable seul et en equipe
+checker les conditions de validation
+poursuivre le niveau d'authentification admin > modérateur > créateur > utilisateur 
+s'occupper des formulaires
 
 ** REVENIR **
 bug sur retour en arrière après supprésion d'un joueur -> revoir le retour après un delete

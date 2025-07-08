@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 class Continent(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -44,16 +45,48 @@ class Card(models.Model):
     position = models.CharField(max_length=100)
     club = models.ForeignKey('Club', on_delete=models.CASCADE, related_name='cards', null=True, blank=True)
     national_team = models.ForeignKey('NationalTeam', on_delete=models.CASCADE, related_name='cards', null=True, blank=True)
-    action = models.CharField(max_length=100)
-    gif = models.ImageField(upload_to='Gifs/', null=True, blank=True)
+    img = models.ImageField(upload_to='imgCard/', null=True, blank=True)
     resume = models.TextField()
     statut = models.BooleanField(default=True)
     stade = models.CharField(max_length=100)
     match = models.CharField(max_length=100)
     date = models.DateTimeField()
 
+    # Nouvelles relations vers Move
+    move_select1 = models.ForeignKey('Move', on_delete=models.SET_NULL, null=True, blank=True, related_name='cards_select1')
+    move_select2 = models.ForeignKey('Move', on_delete=models.SET_NULL, null=True, blank=True, related_name='cards_select2')
+    move_select3 = models.ForeignKey('Move', on_delete=models.SET_NULL, null=True, blank=True, related_name='cards_select3')
+    move_select4 = models.ForeignKey('Move', on_delete=models.SET_NULL, null=True, blank=True, related_name='cards_select4')
+    move_select5 = models.ForeignKey('Move', on_delete=models.SET_NULL, null=True, blank=True, related_name='cards_select5')
+
+    def clean(self):
+        super().clean()
+        # Vérifie l'exclusivité entre club et national_team
+        if (self.club and self.national_team) or (not self.club and not self.national_team):
+            raise ValidationError("Soit un club OU une équipe nationale doit être sélectionné(e), mais pas les deux ni aucun.")
+
+        selected_moves = [
+            self.move_select1,
+            self.move_select2,
+            self.move_select3,
+            self.move_select4,
+            self.move_select5,
+        ]
+
+        # Supprime les valeurs nulles
+        filtered_moves = [move for move in selected_moves if move is not None]
+
+        if len(filtered_moves) != len(set(filtered_moves)):
+            raise ValidationError("Un même Move ne peut pas être sélectionné plusieurs fois.")
+
     def __str__(self):
-        return f"{self.club.name} - {self.name}"
+        joueur_nom = self.joueur.last_name if self.joueur else 'No Player'
+        club_nom = self.club.name if self.club else None
+        national_team_nom = self.national_team.name if self.national_team else None
+
+        equipe = club_nom if club_nom else national_team_nom if national_team_nom else 'No Team'
+
+        return f"{joueur_nom} {self.numero} - {equipe} - {self.name}"
     
 class Club(models.Model):
     name = models.CharField(max_length=100)
@@ -154,3 +187,19 @@ class AwardWin(models.Model):
 
     def __str__(self):
         return f"{self.player.first_name} {self.player.last_name} - {self.award.name if self.award else 'N/A'} {self.date}"
+
+class Type(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class Move(models.Model):
+    name = models.CharField(max_length=100)
+    resume = models.TextField()
+    minute = models.IntegerField()
+    gif = models.ImageField(upload_to='Gifs/', null=True, blank=True)
+    typeMove  = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='moves')
+
+    def __str__(self):
+        return f"{self.name} - {self.typeMove}"
