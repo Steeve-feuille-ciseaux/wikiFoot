@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from .models import Joueur
+from .models import Club
 from .forms import JoueurForm
 from django.contrib.auth.decorators import login_required
 
@@ -13,6 +14,7 @@ def dashboard(request):
 def home(request):
     return render(request, 'base.html')
 
+# Onglet Joueurs
 def liste_joueurs(request):
     joueurs = Joueur.objects.all()  # récupère tous les joueurs en base
     return render(request, 'joueurs/liste_joueurs.html', {'joueurs': joueurs})
@@ -55,3 +57,12 @@ def joueur_supprimer(request, pk):
     
     # Optionnel : afficher une page de confirmation avant suppression
     return render(request, 'joueurs/joueur_confirm_delete.html', {'joueur': joueur})
+
+# Onglet Clubs
+def liste_clubs(request):
+    clubs = Club.objects.all()  # récupère tous les clubs en base
+    return render(request, 'clubs/liste_clubs.html', {'clubs': clubs})
+
+def club_detail(request, pk):
+    club = get_object_or_404(Club, pk=pk)
+    return render(request, 'clubs/club_detail.html', {'club': club})
