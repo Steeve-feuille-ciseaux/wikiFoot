@@ -6,12 +6,12 @@
 {% block body %}
 <div class="container mt-4">
     <h2>Confirmer la suppression</h2>
-    <p>Êtes-vous sûr de vouloir supprimer la carte <strong>{{ card.name }}</strong> (ID: {{ card.pk }}) ?</p>
+    <p>Êtes-vous sûr de vouloir supprimer la carte <strong>{{ carte.name }}</strong> (ID: {{ carte.pk }}) ?</p>
 
-    <form method="post" action="{% url 'supprimer_carte' card.pk %}">
+    <form method="post" action="{% url 'supprimer_carte' carte.pk %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Oui, supprimer</button>
-        <a href="{% url 'detail_carte' card.pk %}" class="btn btn-secondary">Annuler</a>
+        <a href="{% url 'detail_carte' carte.pk %}" class="btn btn-secondary">Annuler</a>
     </form>
 </div>
 {% endblock %}

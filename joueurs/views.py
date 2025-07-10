@@ -168,7 +168,7 @@ def ajouter_carte(request):
         if form.is_valid():
             form.save()
             messages.success(request, "La carte a bien été ajoutée.")
-            return redirect('liste_card')
+            return redirect('liste_carte')
     else:
         form = CardForm()
     
@@ -194,6 +194,6 @@ def supprimer_carte(request, pk):
     if request.method == 'POST':
         carte.delete()
         messages.success(request, "La carte a bien été supprimée.")
-        return redirect('liste_cartes')
+        return redirect('liste_carte')
 
     return render(request, 'cards/confirm_delete_card.html', {'carte': carte})

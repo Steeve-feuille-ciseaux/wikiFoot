@@ -7,7 +7,7 @@ v0.01.5 = Création table Move, Type
 v0.01.6 = Création template liste_club, club_detail, 
 v0.01.7 = CRUD Club terminé
 v0.01.8 = CRUD Pays + Cartes à reprendre
-
+v0.01.9 = CRUD Cartes terminé
 
 ** Next step **
 checker les conditions de validation
@@ -17,7 +17,6 @@ s'occupper des formulaires
 ** REVENIR **
 bug sur retour en arrière après supprésion d'un joueur -> revoir le retour après un delete
 Remettre a joueurs les templates car les valeur joueurs ont été changé
-FINIR LE CRUD Cartes, bug sur details cartes à résoudre !!
 
 ** cmd récurrent *
 python -m venv env
