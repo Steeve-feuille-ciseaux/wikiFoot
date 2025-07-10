@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Carte {{ card.name }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {{ block.super }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h1 class="h3 mb-0">{{ card.name }} (#{{ card.numero }})</h1>
+                    <a href="#" class="btn btn-danger">Supprimer</a>
+                    <!-- <a href="{% url 'supprimer_carte' card.pk %}" class="btn btn-danger">Supprimer</a> -->
+                        <i class="fas fa-trash"></i> Supprimer
+                    </a>
+                </div>
+
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            {% if card.img %}
+                                <img src="{{ card.img.url }}"
+                                     alt="Image de {{ card.name }}"
+                                     class="img-fluid rounded mb-3">
+                            {% else %}
+                                <div class="bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
+                                    <i class="fas fa-image fa-5x text-secondary"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <h5 class="text-primary">Informations générales</h5>
+                            <p><strong>Joueur:</strong><br>
+                                {% if card.joueur %}
+                                    {{ card.joueur.last_name }} {{ card.joueur.first_name }}
+                                {% else %}
+                                    Aucun joueur
+                                {% endif %}
+                            </p>
+                            <p><strong>Position:</strong><br>{{ card.position }}</p>
+                            <p><strong>Numéro:</strong><br>{{ card.numero }}</p>
+                            <p><strong>Équipe:</strong><br>
+                                {% if card.club %}
+                                    {{ card.club.name }}
+                                {% elif card.national_team %}
+                                    {{ card.national_team.name }}
+                                {% else %}
+                                    Aucun
+                                {% endif %}
+                            </p>
+                            <p><strong>Date du match:</strong><br>{{ card.date|date:"d/m/Y H:i" }}</p>
+                            <p><strong>Stade:</strong><br>{{ card.stade }}</p>
+                            <p><strong>Match:</strong><br>{{ card.match }}</p>
+
+                            <h5 class="text-primary mt-4">Résumé</h5>
+                            <p>{{ card.resume }}</p>
+
+                            <h5 class="text-primary mt-4">Moves sélectionnés</h5>
+                            <ul>
+                            {% if card.move_select1 %}
+                                <li>{{ card.move_select1.name }}</li>
+                            {% endif %}
+                            {% if card.move_select2 %}
+                                <li>{{ card.move_select2.name }}</li>
+                            {% endif %}
+                            {% if card.move_select3 %}
+                                <li>{{ card.move_select3.name }}</li>
+                            {% endif %}
+                            {% if card.move_select4 %}
+                                <li>{{ card.move_select4.name }}</li>
+                            {% endif %}
+                            {% if card.move_select5 %}
+                                <li>{{ card.move_select5.name }}</li>
+                            {% endif %}
+                            </ul>
+
+                            <p><strong>Statut:</strong> {{ card.statut|yesno:"Actif,Inactif" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <a href="{% url 'liste_cards' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Retour à la liste
+                </a>
+                <a href="{% url 'modifier_card' card.pk %}" class="btn btn-warning ms-2">
+                    <i class="fas fa-edit"></i> Modifier
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

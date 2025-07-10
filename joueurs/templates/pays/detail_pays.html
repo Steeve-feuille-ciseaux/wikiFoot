@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}{{ pays.name }}{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>{{ pays.name }}</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            {% if pays.flag %}
+                <img src="{{ pays.flag.url }}" alt="Drapeau de {{ pays.name }}" class="img-fluid mb-3">
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Continent</th>
+                        <td>{{ pays.continent.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Culture</th>
+                        <td>{{ pays.culture|default:"Non spécifiée" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Capitale</th>
+                        <td>{{ pays.capital|default:"Non spécifiée" }}</td>
+                    </tr>
+                    <tr>
+                    <th>Fédération</th>
+                        <td>{{ pays.federation|default:"Non spécifiée" }}</td>
+                    </tr>
+                    {% if pays.logo_federation %}
+                        <tr>
+                            <th>Logo de la fédération</th>
+                            <td>
+                                <img src="{{ pays.logo_federation.url }}" alt="Logo de la fédération" style="max-height: 80px;">
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a href="{% url 'liste_pays' %}" class="btn btn-secondary">Retour à la liste</a>
+
+        {% if app.user and app.user.role >= 3 %}
+            <a href="{% url 'modifier_pays' pays.pk %}" class="btn btn-warning">Modifier</a>
+            <form method="post" action="{% url 'supprimer_pays' pays.pk %}" class="d-inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce pays ?');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Suppression du pays{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-danger">Confirmer la suppression</h2>
+
+    <p>Êtes-vous sûr de vouloir supprimer le pays <strong>{{ pays.name }}</strong> ? Cette action est irréversible.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <a href="{% url 'detail_pays' pays.pk %}" class="btn btn-secondary">Annuler</a>
+        <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+    </form>
+</div>
+{% endblock %}

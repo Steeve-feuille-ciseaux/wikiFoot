@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Modifier la carte{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="mb-4">Modifier la carte : {{ card.name }}</h2>
+
+    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="text-danger small">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.numero.label_tag }}
+                {{ form.numero }}
+                {% if form.numero.errors %}
+                    <div class="text-danger small">{{ form.numero.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.position.label_tag }}
+                {{ form.position }}
+                {% if form.position.errors %}
+                    <div class="text-danger small">{{ form.position.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.date.label_tag }}
+                {{ form.date }}
+                {% if form.date.errors %}
+                    <div class="text-danger small">{{ form.date.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.joueur.label_tag }}
+                {{ form.joueur }}
+                {% if form.joueur.errors %}
+                    <div class="text-danger small">{{ form.joueur.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.img.label_tag }}
+                {{ form.img }}
+                {% if form.img.errors %}
+                    <div class="text-danger small">{{ form.img.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.club.label_tag }}
+                {{ form.club }}
+                {% if form.club.errors %}
+                    <div class="text-danger small">{{ form.club.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.national_team.label_tag }}
+                {{ form.national_team }}
+                {% if form.national_team.errors %}
+                    <div class="text-danger small">{{ form.national_team.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            {{ form.resume.label_tag }}
+            {{ form.resume }}
+            {% if form.resume.errors %}
+                <div class="text-danger small">{{ form.resume.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.statut.label_tag }}
+            {{ form.statut }}
+            {% if form.statut.errors %}
+                <div class="text-danger small">{{ form.statut.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.stade.label_tag }}
+                {{ form.stade }}
+                {% if form.stade.errors %}
+                    <div class="text-danger small">{{ form.stade.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.match.label_tag }}
+                {{ form.match }}
+                {% if form.match.errors %}
+                    <div class="text-danger small">{{ form.match.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <hr>
+
+        <h5>Sélection des Moves</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.move_select1.label_tag }}
+                {{ form.move_select1 }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.move_select2.label_tag }}
+                {{ form.move_select2 }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.move_select3.label_tag }}
+                {{ form.move_select3 }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.move_select4.label_tag }}
+                {{ form.move_select4 }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.move_select5.label_tag }}
+                {{ form.move_select5 }}
+            </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">
+            {{ button_label|default:"Mettre à jour" }}
+        </button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Modifier le pays{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="mb-4">Modifier le pays : {{ pays.name }}</h2>
+
+    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="text-danger small">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.continent.label_tag }}
+                {{ form.continent }}
+                {% if form.continent.errors %}
+                    <div class="text-danger small">{{ form.continent.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.capital.label_tag }}
+                {{ form.capital }}
+                {% if form.capital.errors %}
+                    <div class="text-danger small">{{ form.capital.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.culture.label_tag }}
+                {{ form.culture }}
+                {% if form.culture.errors %}
+                    <div class="text-danger small">{{ form.culture.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-3">
+                {{ form.flag.label_tag }}
+                {{ form.flag }}
+                {% if form.flag.errors %}
+                    <div class="text-danger small">{{ form.flag.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            {{ form.federation.label_tag }}
+            {{ form.federation }}
+            {% if form.federation.errors %}
+                <div class="text-danger small">{{ form.federation.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-6 mb-3">
+            {{ form.logo_federation.label_tag }}
+            {{ form.logo_federation }}
+            {% if form.logo_federation.errors %}
+                <div class="text-danger small">{{ form.logo_federation.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button class="btn btn-primary" type="submit">
+            {{ button_label|default:"Mettre à jour" }}
+        </button>
+    </form>
+</div>
+{% endblock %}

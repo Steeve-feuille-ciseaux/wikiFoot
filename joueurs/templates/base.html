@@ -82,7 +82,7 @@
                                 <i class="fas fa-globe me-1"></i> Pays
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Liste des pays</a></li>
+                                <li><a class="dropdown-item" href="{% url 'liste_pays' %}">Liste des pays</a></li>
                                 {% if user.is_authenticated and user.role|default:0 > 2 %}
                                     <li><a class="dropdown-item" href="#">Nouveau pays</a></li>
                                 {% endif %}
@@ -95,7 +95,7 @@
                                 <i class="fas fa-id-card me-1"></i> Cartes
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Liste des cartes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'liste_carte' %}">Liste des cartes</a></li>
                                 {% if user.is_authenticated and user.role|default:0 >= 2 %}
                                     <li><a class="dropdown-item" href="#">Nouvelle carte</a></li>
                                     <li><a class="dropdown-item" href="#">Cartes en attente</a></li>

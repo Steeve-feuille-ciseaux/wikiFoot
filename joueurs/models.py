@@ -4,16 +4,19 @@ from django.core.exceptions import ValidationError
 class Continent(models.Model):
     name = models.CharField(max_length=100, unique=True)
     confederation = models.CharField(max_length=100, null=True, blank=True, default='Inconnue')
+    logo = models.ImageField(upload_to='confederation/', null=True, blank=True) 
 
     def __str__(self):
         return self.name
 
 class Country(models.Model):
     name = models.CharField(max_length=100, unique=True)
+    capital = models.CharField(max_length=100, null=True, blank=True)
+    flag = models.ImageField(upload_to='drapeau/') 
+    culture = models.TextField(max_length=100, null=True, blank=True)
     continent = models.ForeignKey(Continent, on_delete=models.CASCADE)
-    flag = models.ImageField(upload_to='drapeau/')  # ou ImageField si tu gères des images
-    culture = models.TextField(max_length=100, null=True, blank=True, default='Inconnue')
-    capital = models.CharField(max_length=100, null=True, blank=True, default='Inconnue')
+    federation = models.CharField(max_length=100, unique=True, null=True, blank=True)
+    logo_federation = models.ImageField(upload_to='federation/', null=True, blank=True)
 
     def __str__(self):
         return self.name
