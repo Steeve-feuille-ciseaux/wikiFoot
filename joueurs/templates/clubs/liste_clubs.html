@@ -43,8 +43,9 @@
                 <td>{{ club.country.name }}</td>
                 <td>
                     <a href="{% url 'club_detail' club.pk %}" class="btn btn-sm btn-info">Voir</a>
+                    <a href="{% url 'modifier_club' club.pk %}" class="btn btn-sm btn-warning">Modifier</a>
+                    <a href="{% url 'club_supprimer' club.pk %}" class="btn btn-danger"><i class="fas fa-trash"></i> Supprimer</a> 
                     {% if app.user and app.user.role >= 3 %}
-                        <a href="{% url 'club_edit' club.pk %}" class="btn btn-sm btn-warning">Modifier</a>
                     {% endif %}
                 </td>
             </tr>

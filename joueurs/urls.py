@@ -14,6 +14,10 @@ urlpatterns = [
     # Onglet Clubs
     path('clubs/', views.liste_clubs, name='liste_clubs'),
     path('clubs/<int:pk>/', views.club_detail, name='club_detail'),
+    path('clubs/ajouter/', views.ajouter_club, name='ajouter_club'),
+    path('clubs/modifier/<int:club_id>/', views.modifier_club, name='modifier_club'),
+    path('clubs/supprimer/<int:pk>/', views.club_supprimer, name='club_supprimer'),
+
 
     path('', views.home, name=''),
 ]

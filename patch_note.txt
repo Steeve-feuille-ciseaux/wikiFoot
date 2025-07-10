@@ -4,7 +4,8 @@ v0.01.2 = Création table Cards et Club
 v0.01.3 = Création table NationalTeam, Competition, CompetitionWin, SelectionTeam, Award, AwardWin
 v0.01.4 = Création table LineUp, Championship, ChampionshipWin + préparation authentification
 v0.01.5 = Création table Move, Type
-v0.01.6 = Création template liste_ckub, club_detail
+v0.01.6 = Création template liste_club, club_detail, 
+v0.01.7 = CRUD Club terminé
 
 ** Next step **
 checker les conditions de validation

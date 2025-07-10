@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Modifier le club{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="mb-4">Modifier le club : {{ club.name }}</h2>
+
+    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="text-danger small">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.country.label_tag }}
+                {{ form.country }}
+                {% if form.country.errors %}
+                    <div class="text-danger small">{{ form.country.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.stade.label_tag }}
+                {{ form.stade }}
+                {% if form.stade.errors %}
+                    <div class="text-danger small">{{ form.stade.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.rival.label_tag }}
+                {{ form.rival }}
+                {% if form.rival.errors %}
+                    <div class="text-danger small">{{ form.rival.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-3">
+                {{ form.story.label_tag }}
+                {{ form.story }}
+                {% if form.story.errors %}
+                    <div class="text-danger small">{{ form.story.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-3">
+                {{ form.blazon.label_tag }}
+                {{ form.blazon }}
+                {% if form.blazon.errors %}
+                    <div class="text-danger small">{{ form.blazon.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">
+            {{ button_label|default:"Mettre à jour" }}
+        </button>
+    </form>
+</div>
+{% endblock %}

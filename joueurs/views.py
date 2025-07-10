@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from .models import Joueur
-from .models import Club
 from .forms import JoueurForm
+from .models import Club
+from .forms import ClubForm
 from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render
@@ -66,3 +67,39 @@ def liste_clubs(request):
 def club_detail(request, pk):
     club = get_object_or_404(Club, pk=pk)
     return render(request, 'clubs/club_detail.html', {'club': club})
+
+def ajouter_club(request):
+    if request.method == 'POST':
+        form = ClubForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Le club a bien été ajouté.")
+            return redirect('liste_clubs')
+    else:
+        form = ClubForm()
+
+    return render(request, 'clubs/ajouter_club.html', {'form': form})
+
+def modifier_club(request, club_id):
+    club = get_object_or_404(Club, id=club_id)
+
+    if request.method == 'POST':
+        form = ClubForm(request.POST, request.FILES, instance=club)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Le club a bien été modifié.")
+            return redirect('club_detail', pk=club.id)
+    else:
+        form = ClubForm(instance=club)
+
+    return render(request, 'clubs/modifier_club.html', {'form': form, 'club': club})
+
+def club_supprimer(request, pk):
+    club = get_object_or_404(Club, pk=pk)
+
+    if request.method == 'POST':
+        club.delete()
+        messages.success(request, "Le club a bien été supprimé.")
+        return redirect('liste_clubs')
+
+    return render(request, 'clubs/club_confirm_delete.html', {'club': club})
