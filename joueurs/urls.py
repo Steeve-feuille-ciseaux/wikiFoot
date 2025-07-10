@@ -3,6 +3,13 @@ from . import views
 
 urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
+    
+    # Onglet Entraîneur
+    path('entraineurs/', views.liste_entraineurs, name='liste_entraineurs'),
+    path('entraineurs/<int:pk>/', views.entraineur_detail, name='entraineur_detail'),
+    path('entraineurs/ajouter/', views.ajouter_entraineur, name='ajouter_entraineur'),
+    path('entraineurs/modifier/<int:entraineur_id>/', views.modifier_entraineur, name='modifier_entraineur'),
+    path('entraineurs/supprimer/<int:pk>/', views.supprimer_entraineur, name='supprimer_entraineur'),
 
     # Onglet joueurs
     path('joueurs/', views.liste_joueurs, name='liste_joueurs'),
@@ -31,6 +38,13 @@ urlpatterns = [
     path('cartes/ajouter/', views.ajouter_carte, name='ajouter_carte'),
     path('cartes/modifier/<int:carte_id>/', views.modifier_carte, name='modifier_carte'),
     path('cartes/supprimer/<int:pk>/', views.supprimer_carte, name='supprimer_carte'),
+
+    # Onglet Move
+    path('moves/', views.liste_moves, name='liste_moves'),
+    path('moves/<int:pk>/', views.move_detail, name='move_detail'),
+    path('moves/ajouter/', views.ajouter_move, name='ajouter_move'),
+    path('moves/modifier/<int:move_id>/', views.modifier_move, name='modifier_move'),
+    path('moves/supprimer/<int:pk>/', views.supprimer_move, name='supprimer_move'),
 
     path('', views.home, name=''),
 ]

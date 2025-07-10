@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Ajouter une action{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="mb-4">Ajouter une action</h2>
+
+    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="text-danger small">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.minute.label_tag }}
+                {{ form.minute }}
+                {% if form.minute.errors %}
+                    <div class="text-danger small">{{ form.minute.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            {{ form.typeMove.label_tag }}
+            {{ form.typeMove }}
+            {% if form.typeMove.errors %}
+                <div class="text-danger small">{{ form.typeMove.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.resume.label_tag }}
+            {{ form.resume }}
+            {% if form.resume.errors %}
+                <div class="text-danger small">{{ form.resume.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.gif.label_tag }}
+            {{ form.gif }}
+            {% if form.gif.errors %}
+                <div class="text-danger small">{{ form.gif.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button class="btn btn-success" type="submit">
+            {{ button_label|default:"Enregistrer" }}
+        </button>
+    </form>
+</div>
+{% endblock %}

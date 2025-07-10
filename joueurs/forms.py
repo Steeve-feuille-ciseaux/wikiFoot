@@ -1,6 +1,6 @@
 # joueurs/forms.py
 from django import forms
-from .models import Joueur, Club, Country, Card
+from .models import Joueur, Club, Country, Card, Move, Entraineur
 
 class JoueurForm(forms.ModelForm):
     class Meta:
@@ -69,4 +69,31 @@ class CardForm(forms.ModelForm):
             'move_select3': forms.Select(attrs={'class': 'form-control'}),
             'move_select4': forms.Select(attrs={'class': 'form-control'}),
             'move_select5': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+class MoveForm(forms.ModelForm):
+    class Meta:
+        model = Move
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom de l’action'}),
+            'resume': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Résumé de l’action', 'rows': 4}),
+            'minute': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Minute du move'}),
+            'gif': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'typeMove': forms.Select(attrs={'class': 'form-select'}),
+        }
+
+class EntraineurForm(forms.ModelForm):
+    class Meta:
+        model = Entraineur
+        fields = '__all__'
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'old': forms.NumberInput(attrs={'class': 'form-control'}),
+            'date_of_birth': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'country': forms.Select(attrs={'class': 'form-control'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'style': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'resume': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }

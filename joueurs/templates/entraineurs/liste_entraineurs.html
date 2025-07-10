@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Liste des entraîneurs{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/liste_entraineur.css' %}">
+    {{ block.super }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Liste des entraîneurs</h1>
+        {% if app.user and app.user.role >= 3 %}
+            <a href="{% url 'ajouter_entraineur' %}" class="btn btn-primary">
+                <i class="fas fa-plus me-1"></i> Nouvel entraîneur
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        {% for entraineur in entraineurs %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if entraineur.image %}
+                        <img src="{{ entraineur.image.url }}"
+                             class="card-img-top"
+                             alt="Photo de {{ entraineur.first_name }} {{ entraineur.last_name }}"
+                             style="height: 250px; object-fit: cover;">
+                    {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                             style="height: 250px;">
+                            <i class="fas fa-chalkboard-teacher fa-4x text-secondary"></i>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ entraineur.first_name }} {{ entraineur.last_name }}</h5>
+                        {% if entraineur.country %}
+                            <p class="card-text">
+                                <strong>Pays :</strong> {{ entraineur.country.name }}<br>
+                                {% if entraineur.old %}<strong>Âge :</strong> {{ entraineur.old }} ans{% endif %}
+                            </p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <div class="btn-group w-100">
+                            <a href="{% url 'entraineur_detail' entraineur.pk %}" class="btn btn-info w-100">
+                                <i class="fas fa-eye"></i> Voir
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    Aucun entraîneur trouvé.
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

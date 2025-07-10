@@ -8,6 +8,7 @@ v0.01.6 = Création template liste_club, club_detail,
 v0.01.7 = CRUD Club terminé
 v0.01.8 = CRUD Pays + Cartes à reprendre
 v0.01.9 = CRUD Cartes terminé
+v0.01.10 = CRUD Move + Entraineurs
 
 ** Next step **
 checker les conditions de validation

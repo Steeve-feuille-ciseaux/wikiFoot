@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Détail de l'entraîneur{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/liste_entraineur.css' %}">
+    {{ block.super }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Détail de {{ entraineur.first_name }} {{ entraineur.last_name }}</h1>
+            <div>
+                <a href="{% url 'modifier_entraineur' entraineur.pk %}" class="btn btn-warning me-2">
+                    <i class="fas fa-edit me-1"></i>Modifier
+                </a>
+                <a href="{% url 'supprimer_entraineur' entraineur.pk %}" class="btn btn-danger">Supprimer</a>
+            </div>
+        {% if app.user and app.user.role >= 3 %}
+        {% endif %}
+    </div>
+
+    <div class="card shadow-sm">
+        {% if entraineur.image %}
+            <img src="{{ entraineur.image.url }}"
+                 class="card-img-top"
+                 alt="Photo de {{ entraineur.first_name }} {{ entraineur.last_name }}"
+                 style="height: 350px; object-fit: cover;">
+        {% else %}
+            <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                 style="height: 350px;">
+                <i class="fas fa-chalkboard-teacher fa-5x text-secondary"></i>
+            </div>
+        {% endif %}
+
+        <div class="card-body">
+            <h3 class="card-title">{{ entraineur.first_name }} {{ entraineur.last_name }}</h3>
+            <p><strong>Âge:</strong> {{ entraineur.old }}</p>
+            <p><strong>Date de naissance:</strong> {{ entraineur.date_of_birth }}</p>
+            <p><strong>Pays:</strong> {{ entraineur.country.nom }}</p>
+            {% if entraineur.style %}
+                <p><strong>Style:</strong> {{ entraineur.style|linebreaks }}</p>
+            {% endif %}
+            {% if entraineur.resume %}
+                <p><strong>Résumé:</strong> {{ entraineur.resume|linebreaks }}</p>
+            {% endif %}
+        </div>
+
+        <div class="card-footer bg-white border-top-0">
+            <a href="{% url 'liste_entraineurs' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i>Retour à la liste
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

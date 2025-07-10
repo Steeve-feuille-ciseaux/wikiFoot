@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Modifier un entraîneur{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="mb-4">Modifier un entraîneur</h2>
+
+    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.first_name.label_tag }}
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                    <div class="text-danger small">{{ form.first_name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.last_name.label_tag }}
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                    <div class="text-danger small">{{ form.last_name.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.date_of_birth.label_tag }}
+                {{ form.date_of_birth }}
+                {% if form.date_of_birth.errors %}
+                    <div class="text-danger small">{{ form.date_of_birth.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.country.label_tag }}
+                {{ form.country }}
+                {% if form.country.errors %}
+                    <div class="text-danger small">{{ form.country.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.old.label_tag }}
+                {{ form.old }}
+                {% if form.old.errors %}
+                    <div class="text-danger small">{{ form.old.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                <!-- Peut laisser vide si pas d’autre champ sur cette colonne -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-3">
+                {{ form.image.label_tag }}
+                {{ form.image }}
+                <small class="form-text text-muted">
+                    Formats acceptés : JPG, PNG. Taille maximale : 1MB
+                </small>
+                {% if form.image.errors %}
+                    <div class="text-danger small">{{ form.image.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-3">
+                {{ form.style.label_tag }}
+                {{ form.style }}
+                {% if form.style.errors %}
+                    <div class="text-danger small">{{ form.style.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-3">
+                {{ form.resume.label_tag }}
+                {{ form.resume }}
+                {% if form.resume.errors %}
+                    <div class="text-danger small">{{ form.resume.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">
+            {{ button_label|default:"Modifier" }}
+        </button>
+    </form>
+</div>
+{% endblock %}

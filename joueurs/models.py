@@ -206,3 +206,22 @@ class Move(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.typeMove}"
+    
+class Entraineur(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    old = models.IntegerField(null=True, blank=True)
+    date_of_birth = models.DateField()
+    country = models.ForeignKey('Country', on_delete=models.SET_NULL, null=True, related_name='entraineurs')
+    image = models.ImageField(upload_to='entraineurs/', null=True, blank=True)
+    style = models.TextField(null=True, blank=True)
+    resume = models.TextField(null=True, blank=True)
+    # championship_win = models.ForeignKey('ChampionshipWin', on_delete=models.SET_NULL, null=True, blank=True)
+    # competition_win = models.ForeignKey('CompetitionWin', on_delete=models.SET_NULL, null=True, blank=True)
+    # award = models.ForeignKey('PlayerSuccess', on_delete=models.SET_NULL, null=True, blank=True)
+    # club = models.ForeignKey('Club', on_delete=models.SET_NULL, null=True, blank=True)
+    # card = models.ForeignKey('Card', on_delete=models.SET_NULL, null=True, blank=True)
+    # national_team = models.ForeignKey('NationalTeam', on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from .models import Joueur, Club, Country, Card
-from .forms import JoueurForm, ClubForm, CountryForm, CardForm
+from .models import Joueur, Club, Country, Card, Move, Entraineur
+from .forms import JoueurForm, ClubForm, CountryForm, CardForm, MoveForm, EntraineurForm
 # from .models import Club
 # from .forms import ClubForm
 # from .models import Country
@@ -197,3 +197,93 @@ def supprimer_carte(request, pk):
         return redirect('liste_carte')
 
     return render(request, 'cards/confirm_delete_card.html', {'carte': carte})
+
+# Onglet Moves
+def liste_moves(request):
+    moves = Move.objects.all()
+    return render(request, 'moves/liste_move.html', {'moves': moves})
+
+def move_detail(request, pk):
+    move = get_object_or_404(Move, pk=pk)
+    return render(request, 'moves/detail_move.html', {'move': move})
+
+def ajouter_move(request):
+    if request.method == 'POST':
+        form = MoveForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "L'action a bien été ajoutée.")
+            return redirect('liste_moves')
+    else:
+        form = MoveForm()
+    
+    return render(request, 'moves/ajouter_move.html', {'form': form})
+
+def modifier_move(request, move_id):
+    move = get_object_or_404(Move, id=move_id)
+
+    if request.method == 'POST':
+        form = MoveForm(request.POST, request.FILES, instance=move)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "L'action a bien été modifiée.")
+            return redirect('move_detail', pk=move.id)
+    else:
+        form = MoveForm(instance=move)
+
+    return render(request, 'moves/modifier_move.html', {'form': form, 'move': move})
+
+def supprimer_move(request, pk):
+    move = get_object_or_404(Move, pk=pk)
+
+    if request.method == 'POST':
+        move.delete()
+        messages.success(request, "L'action a bien été supprimée.")
+        return redirect('liste_moves')
+
+    return render(request, 'moves/confirm_delete_move.html', {'move': move})
+
+# Onglet Entraineurs
+def liste_entraineurs(request):
+    entraineurs = Entraineur.objects.all()
+    return render(request, 'entraineurs/liste_entraineurs.html', {'entraineurs': entraineurs})
+
+def entraineur_detail(request, pk):
+    entraineur = get_object_or_404(Entraineur, pk=pk)
+    return render(request, 'entraineurs/detail_entraineur.html', {'entraineur': entraineur})
+
+def ajouter_entraineur(request):
+    if request.method == 'POST':
+        form = EntraineurForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "L'entraîneur a bien été ajouté.")
+            return redirect('liste_entraineurs')
+    else:
+        form = EntraineurForm()
+
+    return render(request, 'entraineurs/ajouter_entraineur.html', {'form': form})
+
+def modifier_entraineur(request, entraineur_id):
+    entraineur = get_object_or_404(Entraineur, id=entraineur_id)
+
+    if request.method == 'POST':
+        form = EntraineurForm(request.POST, request.FILES, instance=entraineur)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "L'entraîneur a bien été modifié.")
+            return redirect('entraineur_detail', pk=entraineur.id)
+    else:
+        form = EntraineurForm(instance=entraineur)
+
+    return render(request, 'entraineurs/modifier_entraineur.html', {'form': form, 'entraineur': entraineur})
+
+def supprimer_entraineur(request, pk):
+    entraineur = get_object_or_404(Entraineur, pk=pk)
+
+    if request.method == 'POST':
+        entraineur.delete()
+        messages.success(request, "L'entraîneur a bien été supprimé.")
+        return redirect('liste_entraineurs')
+
+    return render(request, 'entraineurs/confirm_delete_entraineur.html', {'entraineur': entraineur})
