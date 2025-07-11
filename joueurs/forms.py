@@ -94,6 +94,7 @@ class EntraineurForm(forms.ModelForm):
             'date_of_birth': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'country': forms.Select(attrs={'class': 'form-control'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
-            'style': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'style': forms.Select(attrs={'class': 'form-control'}),
+            'formation': forms.Select(attrs={'class': 'form-control'}),
             'resume': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }

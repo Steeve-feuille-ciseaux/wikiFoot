@@ -133,7 +133,8 @@ class Championship(models.Model):
         return f"{self.name} {self.date}"
     
 class ChampionshipWin(models.Model):
-    player = models.ForeignKey('Joueur', on_delete=models.CASCADE, related_name='championship_wins')
+    player = models.ForeignKey('Joueur', on_delete=models.CASCADE, related_name='championship_wins', null=True, blank=True)
+    coach = models.ForeignKey('Entraineur', on_delete=models.CASCADE, related_name='championship_wins', null=True, blank=True)
     championship = models.ForeignKey('Championship', on_delete=models.CASCADE, related_name='wins')
     line_up = models.OneToOneField('LineUp', on_delete=models.SET_NULL, null=True, blank=True, related_name='championship_win')
     date = models.PositiveIntegerField(default=2016)
@@ -141,7 +142,11 @@ class ChampionshipWin(models.Model):
     # team = models.ForeignKey('NationalTeam', on_delete=models.SET_NULL, null=True, blank=True, related_name='competition_wins')
 
     def __str__(self):
-        return f"{self.player.first_name} {self.player.last_name} - {self.championship.name} ({self.date})"
+        return f"{self.player or self.coach} - {self.championship.name} ({self.date})"
+
+    def clean(self):
+        if not self.player and not self.coach:
+            raise ValidationError("Un gagnant doit être soit un joueur, soit un entraîneur.")
     
 class Competition(models.Model):
     name = models.CharField(max_length=100)  # correspond à id_name    
@@ -154,7 +159,8 @@ class Competition(models.Model):
         return f"{self.name} {self.date}"
     
 class CompetitionWin(models.Model):
-    player = models.ForeignKey('Joueur', on_delete=models.CASCADE, related_name='competition_wins')
+    player = models.ForeignKey('Joueur', on_delete=models.CASCADE, related_name='competition_wins', null=True, blank=True)
+    coach = models.ForeignKey('Entraineur', on_delete=models.CASCADE, related_name='competition_wins', null=True, blank=True)
     competition = models.ForeignKey('Competition', on_delete=models.CASCADE, related_name='wins')
     selection_team = models.OneToOneField('SelectionTeam', on_delete=models.SET_NULL, null=True, blank=True, related_name='competition_win')
     date = models.PositiveIntegerField(default=2016)
@@ -162,7 +168,12 @@ class CompetitionWin(models.Model):
     # team = models.ForeignKey('NationalTeam', on_delete=models.SET_NULL, null=True, blank=True, related_name='competition_wins')
 
     def __str__(self):
-        return f"{self.player.first_name} {self.player.last_name} - {self.competition.name} ({self.date})"
+        return f"{self.player or self.coach} - {self.competition.name} ({self.date})"
+
+    def clean(self):
+        # Vérifie qu'au moins l'un des deux (player ou coach) est renseigné
+        if not self.player and not self.coach:
+            raise ValidationError("Un vainqueur doit être soit un joueur, soit un entraîneur.")
     
 class SelectionTeam(models.Model):
     team = models.ForeignKey('NationalTeam', on_delete=models.CASCADE, related_name='selection_teams', null=True, blank=True)
@@ -183,13 +194,18 @@ class Award(models.Model):
         return self.name
 
 class AwardWin(models.Model):
-    player = models.ForeignKey('Joueur', on_delete=models.CASCADE, related_name='award_wins')
+    player = models.ForeignKey('Joueur', on_delete=models.CASCADE, related_name='award_wins', null=True, blank=True)
+    coach = models.ForeignKey('Entraineur', on_delete=models.CASCADE, related_name='award_wins', null=True, blank=True)
     award = models.ForeignKey('Award', on_delete=models.SET_NULL, null=True, blank=True, related_name='wins')
     date = models.PositiveIntegerField(default=1998)
     old = models.IntegerField(null=True, blank=True)  # âge du joueur au moment de la récompense
 
     def __str__(self):
-        return f"{self.player.first_name} {self.player.last_name} - {self.award.name if self.award else 'N/A'} {self.date}"
+        return f"{self.player or self.coach} - {self.award.name if self.award else 'N/A'} {self.date}"
+
+    def clean(self):
+        if not self.player and not self.coach:
+            raise ValidationError("Un gagnant doit être soit un joueur, soit un entraîneur.")
 
 class Type(models.Model):
     name = models.CharField(max_length=100)
@@ -214,8 +230,11 @@ class Entraineur(models.Model):
     date_of_birth = models.DateField()
     country = models.ForeignKey('Country', on_delete=models.SET_NULL, null=True, related_name='entraineurs')
     image = models.ImageField(upload_to='entraineurs/', null=True, blank=True)
-    style = models.TextField(null=True, blank=True)
+    style = models.ForeignKey('Style', on_delete=models.SET_NULL, null=True, blank=True, related_name='entraineurs')
+    formation = models.ForeignKey('Formation', on_delete=models.SET_NULL, null=True, blank=True, related_name='entraineurs')
     resume = models.TextField(null=True, blank=True)
+    career_player = models.OneToOneField('Joueur', on_delete=models.SET_NULL, null=True, blank=True, related_name='entraineur_carriere')
+
     # championship_win = models.ForeignKey('ChampionshipWin', on_delete=models.SET_NULL, null=True, blank=True)
     # competition_win = models.ForeignKey('CompetitionWin', on_delete=models.SET_NULL, null=True, blank=True)
     # award = models.ForeignKey('PlayerSuccess', on_delete=models.SET_NULL, null=True, blank=True)
@@ -225,3 +244,15 @@ class Entraineur(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+class Style(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+    
+class Formation(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name

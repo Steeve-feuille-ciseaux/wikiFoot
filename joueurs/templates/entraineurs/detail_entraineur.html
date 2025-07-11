@@ -12,12 +12,12 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Détail de {{ entraineur.first_name }} {{ entraineur.last_name }}</h1>
-            <div>
-                <a href="{% url 'modifier_entraineur' entraineur.pk %}" class="btn btn-warning me-2">
-                    <i class="fas fa-edit me-1"></i>Modifier
-                </a>
-                <a href="{% url 'supprimer_entraineur' entraineur.pk %}" class="btn btn-danger">Supprimer</a>
-            </div>
+        <div>
+            <a href="{% url 'modifier_entraineur' entraineur.pk %}" class="btn btn-warning me-2">
+                <i class="fas fa-edit me-1"></i>Modifier
+            </a>
+            <a href="{% url 'supprimer_entraineur' entraineur.pk %}" class="btn btn-danger">Supprimer</a>
+        </div>
         {% if app.user and app.user.role >= 3 %}
         {% endif %}
     </div>
@@ -39,10 +39,20 @@
             <h3 class="card-title">{{ entraineur.first_name }} {{ entraineur.last_name }}</h3>
             <p><strong>Âge:</strong> {{ entraineur.old }}</p>
             <p><strong>Date de naissance:</strong> {{ entraineur.date_of_birth }}</p>
-            <p><strong>Pays:</strong> {{ entraineur.country.nom }}</p>
+            <p><strong>Pays:</strong> {{ entraineur.country.name }}</p>
+
             {% if entraineur.style %}
-                <p><strong>Style:</strong> {{ entraineur.style|linebreaks }}</p>
+                <p><strong>Style:</strong> {{ entraineur.style.name }}</p>
             {% endif %}
+
+            {% if entraineur.formation %}
+                <p><strong>Formation:</strong> {{ entraineur.formation.name }}</p>
+            {% endif %}
+
+            {% if entraineur.career_player %}
+                <p><strong>A été joueur :</strong> {{ entraineur.career_player.first_name }} {{ entraineur.career_player.last_name }}</p>
+            {% endif %}
+
             {% if entraineur.resume %}
                 <p><strong>Résumé:</strong> {{ entraineur.resume|linebreaks }}</p>
             {% endif %}

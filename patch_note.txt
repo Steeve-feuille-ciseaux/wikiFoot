@@ -10,9 +10,10 @@ v0.01.8 = CRUD Pays + Cartes à reprendre
 v0.01.9 = CRUD Cartes terminé
 v0.01.10 = CRUD Move + Entraineurs
 v0.02.0 = Mode Sombre
+v0.03.0 = Update CRUD Entraineurs + ChampionshipWin + AwardWin
 
 ** Next step **
-checker les conditions de validation
+vérifier à nouveau les conditions de validation de chaque table
 poursuivre le niveau d'authentification admin > modérateur > créateur > utilisateur 
 
 ** REVENIR **

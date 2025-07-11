@@ -9,6 +9,7 @@
 
     <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
         {% csrf_token %}
+
         <div class="row">
             <div class="col-md-6 mb-3">
                 {{ form.first_name.label_tag }}
@@ -52,7 +53,7 @@
                 {% endif %}
             </div>
             <div class="col-md-6 mb-3">
-                <!-- Peut laisser vide si pas d’autre champ sur cette colonne -->
+                <!-- Champ libre si nécessaire -->
             </div>
         </div>
 
@@ -70,11 +71,18 @@
         </div>
 
         <div class="row">
-            <div class="col-12 mb-3">
+            <div class="col-md-6 mb-3">
                 {{ form.style.label_tag }}
                 {{ form.style }}
                 {% if form.style.errors %}
                     <div class="text-danger small">{{ form.style.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.formation.label_tag }}
+                {{ form.formation }}
+                {% if form.formation.errors %}
+                    <div class="text-danger small">{{ form.formation.errors }}</div>
                 {% endif %}
             </div>
         </div>
@@ -85,6 +93,16 @@
                 {{ form.resume }}
                 {% if form.resume.errors %}
                     <div class="text-danger small">{{ form.resume.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-3">
+                {{ form.career_player.label_tag }}
+                {{ form.career_player }}
+                {% if form.career_player.errors %}
+                    <div class="text-danger small">{{ form.career_player.errors }}</div>
                 {% endif %}
             </div>
         </div>

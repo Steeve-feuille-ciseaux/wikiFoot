@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 from django.contrib import admin
-from .models import Joueur, Country, Continent, Club, Card, NationalTeam, Competition, CompetitionWin, SelectionTeam, Award, AwardWin, LineUp, Championship, ChampionshipWin, Move, Type
+from .models import (Joueur, Country, Continent, Club, Card, NationalTeam, Competition, CompetitionWin, SelectionTeam,
+                      Award, AwardWin, LineUp, Championship, ChampionshipWin, Move, Type, Formation, Style, Entraineur)
 
 admin.site.register(Joueur)
 admin.site.register(Country)
@@ -18,4 +19,7 @@ admin.site.register(LineUp)
 admin.site.register(Championship)
 admin.site.register(ChampionshipWin)
 admin.site.register(Move)
+admin.site.register(Entraineur)
 admin.site.register(Type)
+admin.site.register(Style)
+admin.site.register(Formation)
