@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ joueur.prenom }} {{ joueur.nom }}{% endblock %}
+{% block title %}{{ joueur.first_name }} {{ joueur.last_name }}{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
@@ -14,8 +14,9 @@
         <div class="col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h1 class="h3 mb-0">{{ joueur.prenom }} {{ joueur.nom }}</h1>
-                    <a href="{% url 'joueur_supprimer' joueur.pk %}" class="btn btn-danger mt-3" onclick="return confirm('Voulez-vous vraiment supprimer ce joueur ?');">
+                    <h1 class="h3 mb-0">{{ joueur.first_name }} {{ joueur.last_name }}</h1>
+                    <a href="{% url 'joueur_supprimer' joueur.pk %}" class="btn btn-danger mt-3"
+                       onclick="return confirm('Voulez-vous vraiment supprimer ce joueur ?');">
                         <i class="fas fa-trash"></i> Supprimer
                     </a>
                 </div>
@@ -25,22 +26,29 @@
                         <div class="col-md-4">
                             {% if joueur.image %}
                                 <img src="{{ joueur.image.url }}"
-                                     alt="Photo de {{ joueur.prenom }} {{ joueur.nom }}"
+                                     alt="Photo de {{ joueur.first_name }} {{ joueur.last_name }}"
                                      class="img-fluid rounded mb-3">
+                            {% else %}
+                                <div class="bg-light d-flex align-items-center justify-content-center"
+                                     style="height: 250px;">
+                                    <i class="fas fa-user fa-4x text-secondary"></i>
+                                </div>
                             {% endif %}
                         </div>
+
                         <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-6">
                                     <h5 class="text-primary">Informations personnelles</h5>
-                                    <p><strong>Date de naissance:</strong><br>{{ joueur.date_naissance }}</p>
-                                    <p><strong>Pays:</strong><br>{{ joueur.pays }}</p>
+                                    <p><strong>Date de naissance:</strong><br>{{ joueur.date_of_birth }}</p>
+                                    <p><strong>Pays:</strong><br>{{ joueur.country }}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <h5 class="text-primary">Informations sportives</h5>
                                     <p><strong>Position:</strong><br>{{ joueur.position }}</p>
-                                    <p><strong>Numéro:</strong><br>{{ joueur.numero }}</p>
-                                    <p><strong>Club actuel:</strong><br>{{ joueur.club }}</p>
+                                    <p><strong>Numéro:</strong><br>{{ joueur.number }}</p>
+                                    <!-- Si club est présent dans ton modèle, réactive cette ligne -->
+                                    <!-- <p><strong>Club actuel:</strong><br>{{ joueur.club }}</p> -->
                                 </div>
                             </div>
                         </div>
