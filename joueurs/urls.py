@@ -3,6 +3,9 @@ from . import views
 
 urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
+
+    # Feature Recherche
+    path('recherche/', views.recherche, name='recherche'),
     
     # Onglet Entraîneur
     path('entraineurs/', views.liste_entraineurs, name='liste_entraineurs'),

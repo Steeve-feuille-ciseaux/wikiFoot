@@ -2,10 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from .models import Joueur, Club, Country, Card, Move, Entraineur
 from .forms import JoueurForm, ClubForm, CountryForm, CardForm, MoveForm, EntraineurForm
-# from .models import Club
-# from .forms import ClubForm
-# from .models import Country
-# from .forms import CountryForm  
+from django.db.models import Q
 
 from django.contrib.auth.decorators import login_required
 
@@ -17,6 +14,26 @@ def dashboard(request):
 
 def home(request):
     return render(request, 'base.html')
+
+# Feature Rechercher
+def recherche(request):
+    query = request.GET.get('search', '')
+    joueurs = []
+    entraineurs = []
+
+    if query:
+        joueurs = Joueur.objects.filter(
+            Q(first_name__icontains=query) | Q(last_name__icontains=query)
+        )
+        entraineurs = Entraineur.objects.filter(
+            Q(first_name__icontains=query) | Q(last_name__icontains=query)
+        )
+
+    return render(request, 'recherche_resultats.html', {
+        'query': query,
+        'joueurs': joueurs,
+        'entraineurs': entraineurs,
+    })
 
 # Onglet Joueurs
 def liste_joueurs(request):

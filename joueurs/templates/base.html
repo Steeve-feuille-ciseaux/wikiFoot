@@ -145,8 +145,8 @@
                     </ul>
 
                     <!-- Recherche -->
-                    <form method="get" action="#" class="d-flex me-2">
-                        <input type="text" name="search" class="form-control" placeholder="Rechercher un joueur..." value="{{ request.GET.search }}">
+                    <form method="get" action="{% url 'recherche' %}" class="d-flex me-2">
+                        <input type="text" name="search" class="form-control" placeholder="Rechercher un joueur ou un entraîneur..." value="{{ request.GET.search }}">
                     </form>
 
                     <!-- Compte utilisateur -->
