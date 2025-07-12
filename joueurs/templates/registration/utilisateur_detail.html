@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Détail de l'utilisateur{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <h4>Détail de l'utilisateur : {{ user.username }}</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Nom d'utilisateur :</strong> {{ user.username }}</p>
+            <p><strong>Email :</strong> {{ user.email }}</p>
+            <p><strong>Rôle :</strong> {{ user.profile.role|capfirst }}</p>
+            <p><strong>Rang :</strong> {{ user.profile.rank }}</p>
+            <p><strong>Date d'inscription :</strong> {{ user.date_joined|date:"d/m/Y H:i" }}</p>
+            <p><strong>Dernière connexion :</strong> 
+                {% if user.last_login %}
+                    {{ user.last_login|date:"d/m/Y H:i" }}
+                {% else %}
+                    Jamais connecté
+                {% endif %}
+            </p>
+        </div>
+        <div class="card-footer text-end">
+            <a href="{% url 'liste_utilisateurs' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Retour à la liste
+            </a>
+
+            {% if request.user.profile.rank == 4 %}
+                <a href="{% url 'utilisateur_edit' user.id %}" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Modifier
+                </a>
+                {% if request.user != user %}
+                    <a href="{% url 'utilisateur_delete' user.id %}" class="btn btn-danger"
+                       onclick="return confirm('Supprimer cet utilisateur ?');">
+                        <i class="fas fa-trash"></i> Supprimer
+                    </a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

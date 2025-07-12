@@ -8,14 +8,15 @@ from .views import CustomPasswordChangeView
 urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('register/', register, name='register'),
-    path('utilisateurs/', liste_utilisateurs, name='liste_utilisateurs'),
     path('utilisateurs/modifier/', views.edit_profile, name='edit_profile'),
-    path(
-        'changer-mot-de-passe/',
-        CustomPasswordChangeView.as_view(),
-        name='change_password'
-    ),
+    path('changer-mot-de-passe/', CustomPasswordChangeView.as_view(), name='change_password'),
     path('utilisateur/', views.profile_view, name='profile'),
+
+    # Onglet Management user
+    path('utilisateurs/', liste_utilisateurs, name='liste_utilisateurs'),
+    path('utilisateur/<int:pk>/', views.utilisateur_detail, name='utilisateur_detail'),
+    path('utilisateur/<int:pk>/edit/', views.utilisateur_edit, name='utilisateur_edit'),
+    path('utilisateur/<int:pk>/delete/', views.utilisateur_delete, name='utilisateur_delete'),
 
     # Feature Recherche
     path('recherche/', views.recherche, name='recherche'),

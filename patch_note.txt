@@ -18,6 +18,7 @@ v0.05.1 = Update des role utilisateur
 v0.05.2 = Bug création doublon profile résolue
 v0.05.3 = New feature modifier son compte
 v0.05.4 = New feature modifier son mot de passe
+v0.06.0 = CRUD utilisateur + gestion des utilisateur
 
 ** Next step **
 vérifier à nouveau les conditions de validation de chaque table

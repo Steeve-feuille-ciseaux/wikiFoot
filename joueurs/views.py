@@ -20,10 +20,48 @@ def dashboard(request):
     return render(request, 'base.html')
 
 @login_required
+def utilisateur_detail(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    return render(request, 'registration/utilisateur_detail.html', {'user': user})
+
+@login_required
 @user_passes_test(lambda u: u.profile.rank == 4)
 def liste_utilisateurs(request):
     utilisateurs = User.objects.select_related('profile').all().order_by('username')
     return render(request, 'registration/liste_utilisateurs.html', {'utilisateurs': utilisateurs})
+
+@login_required
+@user_passes_test(lambda u: u.profile.rank == 4)
+def utilisateur_edit(request, pk):
+    user = get_object_or_404(User, pk=pk)
+
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Utilisateur modifié avec succès.")
+            return redirect('utilisateur_detail', pk=user.pk)
+    else:
+        form = ProfileEditForm(instance=user)
+
+    return render(request, 'registration/edit_utilisateur.html', {'form': form, 'user': user})
+
+@login_required
+@user_passes_test(lambda u: u.profile.rank == 4)
+def utilisateur_delete(request, pk):
+    user = get_object_or_404(User, pk=pk)
+
+    # Empêche la suppression de soi-même
+    if request.user == user:
+        messages.error(request, "Vous ne pouvez pas vous supprimer vous-même.")
+        return redirect('liste_utilisateurs')
+
+    if request.method == 'POST':
+        user.delete()
+        messages.success(request, "Utilisateur supprimé avec succès.")
+        return redirect('liste_utilisateurs')
+
+    return render(request, 'registration/confirm_delete_utilisateur.html', {'user': user})
 
 @login_required
 def edit_profile(request):
