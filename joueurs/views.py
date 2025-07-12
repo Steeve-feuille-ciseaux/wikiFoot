@@ -10,6 +10,10 @@ from .forms import JoueurForm, ClubForm, CountryForm, CardForm, MoveForm, Entrai
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileEditForm
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
 
 @login_required
 def dashboard(request):
@@ -44,6 +48,29 @@ def profile_view(request):
         'profile': profile,
     }
     return render(request, 'registration/profile.html', context)
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, "Mot de passe changé avec succès.")
+            # return redirect('login')  # ou la page que tu souhaites
+    else:
+        form = PasswordChangeForm(request.user)
+
+    return render(request, 'registration/change_password.html', {'password_form': form})
+
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = 'registration/change_password.html'
+    success_url = reverse_lazy('profile')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Mot de passe changé avec succès.")
+        return super().form_valid(form)
+
 
 def register(request):
     if request.method == 'POST':

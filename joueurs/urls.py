@@ -1,12 +1,20 @@
 from django.urls import path
 from . import views
 from .views import register, liste_utilisateurs
+from django.contrib.auth import views as auth_views
+from django.urls import reverse_lazy
+from .views import CustomPasswordChangeView
 
 urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('register/', register, name='register'),
     path('utilisateurs/', liste_utilisateurs, name='liste_utilisateurs'),
     path('utilisateurs/modifier/', views.edit_profile, name='edit_profile'),
+    path(
+        'changer-mot-de-passe/',
+        CustomPasswordChangeView.as_view(),
+        name='change_password'
+    ),
     path('utilisateur/', views.profile_view, name='profile'),
 
     # Feature Recherche
