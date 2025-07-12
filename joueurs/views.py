@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import UserCreationForm
+from .forms import CustomUserCreationForm
+from .models import Profile
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
@@ -20,12 +22,22 @@ def liste_utilisateurs(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+
+            # Création d'un profil par défaut
+            Profile.objects.create(
+                user=user,
+                role='utilisateur',  # ou "Utilisateur" selon ta logique
+                rank=1
+            )
+
+            messages.success(request, "Compte créé avec succès. Vous pouvez maintenant vous connecter.")
             return redirect('login')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
+    
     return render(request, 'registration/register.html', {'form': form})
 
 def home(request):
