@@ -44,7 +44,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{% url 'liste_entraineurs' %}">Liste des entraineurs</a></li>
-                                {% if user.is_authenticated and user.role|default:0 > 2 %}
+                                {% if user.is_authenticated and user.profile.rank > 2 %}
                                     <li><a class="dropdown-item" href="{% url 'ajouter_entraineur' %}">Nouvel entraineur</a></li>
                                 {% endif %}
                             </ul>
@@ -57,7 +57,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Liste des équipes</a></li>
-                                {% if user.is_authenticated and user.role|default:0 >= 1 %}
+                                {% if user.is_authenticated and user.profile.rank >= 1 %}
                                     <li><a class="dropdown-item" href="#">Nouvelle Équipe</a></li>
                                 {% endif %}
                             </ul>
@@ -70,7 +70,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{% url 'liste_joueurs' %}">Liste des joueurs</a></li>
-                                {% if user.is_authenticated and user.role|default:0 > 2 %}
+                                {% if user.is_authenticated and user.profile.rank > 2 %}
                                     <li><a class="dropdown-item" href="#">Nouveau joueur</a></li>
                                 {% endif %}
                             </ul>
@@ -83,7 +83,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{% url 'liste_clubs' %}">Liste des clubs</a></li>
-                                {% if user.is_authenticated and user.role|default:0 > 2 %}
+                                {% if user.is_authenticated and user.profile.rank > 2 %}
                                     <li><a class="dropdown-item" href="#">Nouveau club</a></li>
                                 {% endif %}
                             </ul>
@@ -96,7 +96,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{% url 'liste_pays' %}">Liste des pays</a></li>
-                                {% if user.is_authenticated and user.role|default:0 > 2 %}
+                                {% if user.is_authenticated and user.profile.rank > 2 %}
                                     <li><a class="dropdown-item" href="#">Nouveau pays</a></li>
                                 {% endif %}
                             </ul>
@@ -109,7 +109,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{% url 'liste_carte' %}">Liste des cartes</a></li>
-                                {% if user.is_authenticated and user.role|default:0 >= 2 %}
+                                {% if user.is_authenticated and user.profile.rank >= 2 %}
                                     <li><a class="dropdown-item" href="#">Nouvelle carte</a></li>
                                     <li><a class="dropdown-item" href="#">Cartes en attente</a></li>
                                 {% endif %}
@@ -123,7 +123,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{% url 'liste_moves' %}">Liste des actions</a></li>
-                                {% if user.is_authenticated and user.role|default:0 >= 2 %}
+                                {% if user.is_authenticated and user.profile.rank >= 2 %}
                                     <li><a class="dropdown-item" href="#">Nouvelle action</a></li>
                                     <li><a class="dropdown-item" href="#">Actions en attente</a></li>
                                 {% endif %}
