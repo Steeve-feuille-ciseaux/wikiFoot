@@ -6,6 +6,8 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('register/', register, name='register'),
     path('utilisateurs/', liste_utilisateurs, name='liste_utilisateurs'),
+    path('utilisateurs/modifier/', views.edit_profile, name='edit_profile'),
+    path('utilisateur/', views.profile_view, name='profile'),
 
     # Feature Recherche
     path('recherche/', views.recherche, name='recherche'),

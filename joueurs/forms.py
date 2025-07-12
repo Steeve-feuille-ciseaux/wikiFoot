@@ -3,6 +3,7 @@ from django import forms
 from .models import Joueur, Club, Country, Card, Move, Entraineur
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Profile
 
 class JoueurForm(forms.ModelForm):
     class Meta:
@@ -113,4 +114,30 @@ class CustomUserCreationForm(UserCreationForm):
         user.email = self.cleaned_data["email"]
         if commit:
             user.save()
+        return user
+
+class ProfileEditForm(forms.ModelForm):
+    role = forms.ChoiceField(choices=Profile.ROLE_CHOICES, required=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']  # Lien direct aux champs de User
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.get('instance')  # instance du User
+        super().__init__(*args, **kwargs)
+
+        # Préremplir le champ 'role' avec la valeur du profil
+        if self.user:
+            self.fields['role'].initial = self.user.profile.role
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+
+        if commit:
+            user.save()
+            # Enregistre le rôle dans le profil
+            user.profile.role = self.cleaned_data['role']
+            user.profile.save()
+
         return user

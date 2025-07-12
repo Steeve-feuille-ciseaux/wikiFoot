@@ -9,6 +9,7 @@ from .models import Joueur, Club, Country, Card, Move, Entraineur
 from .forms import JoueurForm, ClubForm, CountryForm, CardForm, MoveForm, EntraineurForm
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from .forms import ProfileEditForm
 
 @login_required
 def dashboard(request):
@@ -19,6 +20,30 @@ def dashboard(request):
 def liste_utilisateurs(request):
     utilisateurs = User.objects.select_related('profile').all().order_by('username')
     return render(request, 'registration/liste_utilisateurs.html', {'utilisateurs': utilisateurs})
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profil mis à jour avec succès.")
+            return redirect('profile')
+    else:
+        form = ProfileEditForm(instance=request.user)
+
+    return render(request, 'registration/edit_profile.html', {'form': form})
+
+@login_required
+def profile_view(request):
+    user = request.user
+    profile = user.profile  # via OneToOneField
+
+    context = {
+        'user': user,
+        'profile': profile,
+    }
+    return render(request, 'registration/profile.html', context)
 
 def register(request):
     if request.method == 'POST':
