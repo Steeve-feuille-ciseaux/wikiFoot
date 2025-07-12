@@ -1,6 +1,8 @@
 # joueurs/forms.py
 from django import forms
 from .models import Joueur, Club, Country, Card, Move, Entraineur
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class JoueurForm(forms.ModelForm):
     class Meta:
@@ -98,3 +100,10 @@ class EntraineurForm(forms.ModelForm):
             'formation': forms.Select(attrs={'class': 'form-control'}),
             'resume': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }
+
+class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")

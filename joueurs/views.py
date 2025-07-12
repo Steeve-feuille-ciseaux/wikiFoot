@@ -1,16 +1,32 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .models import Joueur, Club, Country, Card, Move, Entraineur
 from .forms import JoueurForm, ClubForm, CountryForm, CardForm, MoveForm, EntraineurForm
 from django.db.models import Q
-
 from django.contrib.auth.decorators import login_required
-
-from django.shortcuts import render
 
 @login_required
 def dashboard(request):
     return render(request, 'base.html')
+
+@login_required
+@user_passes_test(lambda u: u.profile.rank == 4)
+def liste_utilisateurs(request):
+    utilisateurs = User.objects.select_related('profile').all().order_by('username')
+    return render(request, 'registration/liste_utilisateurs.html', {'utilisateurs': utilisateurs})
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
 
 def home(request):
     return render(request, 'base.html')

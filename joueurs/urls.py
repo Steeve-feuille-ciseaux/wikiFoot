@@ -1,8 +1,11 @@
 from django.urls import path
 from . import views
+from .views import register, liste_utilisateurs
 
 urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('register/', register, name='register'),
+    path('utilisateurs/', liste_utilisateurs, name='liste_utilisateurs'),
 
     # Feature Recherche
     path('recherche/', views.recherche, name='recherche'),

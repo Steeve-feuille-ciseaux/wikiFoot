@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 class Continent(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -256,3 +257,29 @@ class Formation(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Profile(models.Model):
+    ROLE_CHOICES = [
+        ('admin', 'Administrateur'),
+        ('moderator', 'Modérateur'),
+        ('creator', 'Créateur'),
+        ('user', 'Utilisateur'),
+    ]
+
+    RANK_BY_ROLE = {
+        'admin': 4,
+        'moderator': 3,
+        'creator': 2,
+        'user': 1,
+    }
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='user')
+    rank = models.IntegerField(editable=False)  # auto-set, pas modifiable depuis l’admin
+
+    def save(self, *args, **kwargs):
+        self.rank = self.RANK_BY_ROLE.get(self.role, 1)  # Définit automatiquement le rang
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.get_role_display()} (Rang {self.rank})"

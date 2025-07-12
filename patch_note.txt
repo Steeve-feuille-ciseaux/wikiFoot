@@ -13,10 +13,13 @@ v0.02.0 = Mode Sombre
 v0.03.0 = Update CRUD Entraineurs + ChampionshipWin + AwardWin
 v0.04.0 = New Feature Rechercher
 v0.04.1 = Bug template joueurs résolue 
+v0.05.0 = New Feature authentification, création + template + role
+v0.05.1 = Update des role utilisateur
 
 ** Next step **
 vérifier à nouveau les conditions de validation de chaque table
 poursuivre le niveau d'authentification admin > modérateur > créateur > utilisateur 
+s'inspirer de cette page pour l'onglet A propos -> https://recrutement.fff.fr/
 
 ** REVENIR **
 bug sur retour en arrière après supprésion d'un joueur -> revoir le retour après un delete
@@ -30,3 +33,6 @@ python manage.py createsuperuser
 python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
+
+** MEMO REPRISE ** 
+bug trouvé mettre le patch dans l'urls appl et non général

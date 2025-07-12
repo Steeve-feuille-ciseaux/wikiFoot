@@ -131,14 +131,14 @@
                         </li>
 
                         <!-- Utilisateurs (admin only) -->
-                        {% if user.is_authenticated and user.role|default:0 == 4 %}
+                        {% if user.is_authenticated and user.profile.rank == 4 %}
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="usersDropdown" data-bs-toggle="dropdown">
                                     <i class="fas fa-users-cog me-1"></i> Utilisateurs
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Liste des utilisateurs</a></li>
-                                    <li><a class="dropdown-item" href="#">Nouvel utilisateur</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'liste_utilisateurs' %}">Liste des utilisateurs</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'register' %}">Nouvel utilisateur</a></li>
                                 </ul>
                             </li>
                         {% endif %}
@@ -174,7 +174,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{% url 'login' %}">Se connecter</a></li>
-                                <li><a class="dropdown-item" href="#">Créer un compte</a></li>
+                                <li><a class="dropdown-item" href="{% url 'register' %}">Créer un compte</a></li>
                             </ul>
                         </div>
                     {% endif %}
