@@ -23,6 +23,7 @@ v0.06.1 = Update restriction menu + sous-menu
 v0.06.2 = Update sous-menu
 v0.06.3 = Bug résolue : ajout bouton modifier joueur + champs date joueur defectueux
 v0.06.4 = New Feature : notification du contenu, intégrer à l'onglet Entraineurs en attente
+v0.06.5 = Update Feature : notification du contenu, Joueur, Club, Pays, Cartes, Actions
 
 ** Next step **
 Onglet à améliorer selon le grade

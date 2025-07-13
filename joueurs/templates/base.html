@@ -82,7 +82,12 @@
                                     <li><a class="dropdown-item" href="{% url 'ajouter_joueur' %}">Nouveau joueur</a></li>
                                 {% endif %}
                                 {% if user.is_authenticated and user.profile.rank >= 3 %}
-                                    <li><a class="dropdown-item" href="#">Joueur en attente</a></li>
+                                    <li><a class="dropdown-item" href="#">
+                                        Joueur en attente
+                                        {% if visible_joueurs_count > 0 %}
+                                            <span class="badge bg-warning">{{ visible_joueurs_count }}</span>
+                                        {% endif %}
+                                    </a></li>
                                 {% endif %}
                             </ul>
                         </li>
@@ -98,7 +103,12 @@
                                     <li><a class="dropdown-item" href="{% url 'ajouter_club' %}">Nouveau club</a></li>
                                 {% endif %}
                                 {% if user.is_authenticated and user.profile.rank >= 3 %}
-                                    <li><a class="dropdown-item" href="#">Club en attente</a></li>
+                                    <li><a class="dropdown-item" href="#">
+                                        Club en attente
+                                        {% if visible_clubs_count > 0 %}
+                                            <span class="badge bg-warning">{{ visible_clubs_count }}</span>
+                                        {% endif %}
+                                    </a></li>
                                 {% endif %}
                             </ul>
                         </li>
@@ -114,7 +124,12 @@
                                     <li><a class="dropdown-item" href="{% url 'ajouter_pays' %}">Nouveau pays</a></li>
                                 {% endif %}
                                 {% if user.is_authenticated and user.profile.rank >= 3 %}
-                                    <li><a class="dropdown-item" href="#">Pays en attente</a></li>
+                                    <li><a class="dropdown-item" href="#">
+                                        Pays visibles
+                                        {% if visible_countries_count > 0 %}
+                                            <span class="badge bg-warning">{{ visible_countries_count }}</span>
+                                        {% endif %}
+                                    </a></li>
                                 {% endif %}
                             </ul>
                         </li>
@@ -130,7 +145,12 @@
                                     <li><a class="dropdown-item" href="{% url 'ajouter_carte' %}">Nouvelle carte</a></li>
                                 {% endif %}
                                 {% if user.is_authenticated and user.profile.rank >= 3 %}
-                                    <li><a class="dropdown-item" href="#">Cartes en attente</a></li>
+                                    <li><a class="dropdown-item" href="#">
+                                        Cartes visibles
+                                        {% if visible_cards_count > 0 %}
+                                            <span class="badge bg-warning">{{ visible_cards_count }}</span>
+                                        {% endif %}
+                                    </a></li>
                                 {% endif %}
                             </ul>
                         </li>
@@ -146,7 +166,12 @@
                                     <li><a class="dropdown-item" href="{% url 'ajouter_move' %}">Nouvelle action</a></li>
                                 {% endif %}
                                 {% if user.is_authenticated and user.profile.rank >= 3 %}
-                                    <li><a class="dropdown-item" href="#">Actions en attente</a></li>
+                                    <li><a class="dropdown-item" href="#">
+                                        Mouvements visibles
+                                        {% if visible_moves_count > 0 %}
+                                            <span class="badge bg-warning">{{ visible_moves_count }}</span>
+                                        {% endif %}
+                                    </a></li>
                                 {% endif %}
                             </ul>
                         </li>

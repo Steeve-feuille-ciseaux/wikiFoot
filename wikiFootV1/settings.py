@@ -63,7 +63,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # notification contenu en attente
                 'joueurs.context_processors.visible_coaches_count',
+                'joueurs.context_processors.visible_joueurs_count',
+                'joueurs.context_processors.visible_clubs_count',
+                'joueurs.context_processors.visible_cards_count',
+                'joueurs.context_processors.visible_countries_count',
+                'joueurs.context_processors.visible_moves_count',
             ],
         },
     },
