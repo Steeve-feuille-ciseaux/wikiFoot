@@ -100,6 +100,7 @@ class EntraineurForm(forms.ModelForm):
             'style': forms.Select(attrs={'class': 'form-control'}),
             'formation': forms.Select(attrs={'class': 'form-control'}),
             'resume': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'visible': forms.HiddenInput(),
         }
 
 class CustomUserCreationForm(UserCreationForm):

@@ -18,6 +18,7 @@ class Country(models.Model):
     continent = models.ForeignKey(Continent, on_delete=models.CASCADE)
     federation = models.CharField(max_length=100, unique=True, null=True, blank=True)
     logo_federation = models.ImageField(upload_to='federation/', null=True, blank=True)
+    visible = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -38,6 +39,7 @@ class Joueur(models.Model):
     # club = models.ForeignKey('Club', on_delete=models.SET_NULL, null=True, blank=True)
     # card = models.ForeignKey('Card', on_delete=models.SET_NULL, null=True, blank=True)
     # national_team = models.ForeignKey('NationalTeam', on_delete=models.SET_NULL, null=True, blank=True)
+    visible = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -55,6 +57,7 @@ class Card(models.Model):
     stade = models.CharField(max_length=100)
     match = models.CharField(max_length=100)
     date = models.DateTimeField()
+    visible = models.BooleanField(default=False)
 
     # Nouvelles relations vers Move
     move_select1 = models.ForeignKey('Move', on_delete=models.SET_NULL, null=True, blank=True, related_name='cards_select1')
@@ -100,6 +103,7 @@ class Club(models.Model):
     rival = models.OneToOneField('self', on_delete=models.SET_NULL, null=True, blank=True)
     # card_player = models.OneToOneField(Card, on_delete=models.SET_NULL, null=True, blank=True, unique=True)
     stade = models.CharField(max_length=100)
+    visible = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name   
@@ -220,6 +224,7 @@ class Move(models.Model):
     minute = models.IntegerField()
     gif = models.ImageField(upload_to='Gifs/', null=True, blank=True)
     typeMove  = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='moves')
+    visible = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.name} - {self.typeMove}"
@@ -235,6 +240,7 @@ class Entraineur(models.Model):
     formation = models.ForeignKey('Formation', on_delete=models.SET_NULL, null=True, blank=True, related_name='entraineurs')
     resume = models.TextField(null=True, blank=True)
     career_player = models.OneToOneField('Joueur', on_delete=models.SET_NULL, null=True, blank=True, related_name='entraineur_carriere')
+    visible = models.BooleanField(default=False)
 
     # championship_win = models.ForeignKey('ChampionshipWin', on_delete=models.SET_NULL, null=True, blank=True)
     # competition_win = models.ForeignKey('CompetitionWin', on_delete=models.SET_NULL, null=True, blank=True)

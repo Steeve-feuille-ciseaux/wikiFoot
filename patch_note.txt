@@ -21,6 +21,8 @@ v0.05.4 = New feature modifier son mot de passe
 v0.06.0 = CRUD utilisateur + gestion des utilisateur
 v0.06.1 = Update restriction menu + sous-menu
 v0.06.2 = Update sous-menu
+v0.06.3 = Bug résolue : ajout bouton modifier joueur + champs date joueur defectueux
+v0.06.4 = New Feature : notification du contenu, intégrer à l'onglet Entraineurs en attente
 
 ** Next step **
 Onglet à améliorer selon le grade

@@ -48,7 +48,12 @@
                                     <li><a class="dropdown-item" href="{% url 'ajouter_entraineur' %}">Nouvel entraineur</a></li>
                                 {% endif %}
                                 {% if user.is_authenticated and user.profile.rank >= 3 %}
-                                    <li><a class="dropdown-item" href="#">Entraineur en attente</a></li>
+                                    <li><a class="dropdown-item" href="#">
+                                        Entraineur visible
+                                        {% if visible_coaches_count > 0 %}
+                                            <span class="badge bg-warning">{{ visible_coaches_count }}</span>
+                                        {% endif %}
+                                    </a></li>
                                 {% endif %}
                             </ul>
                         </li>
