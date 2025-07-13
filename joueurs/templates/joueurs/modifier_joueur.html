@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 {{ form.date_of_birth.label_tag }}
-                {{ form.date_of_birth }}
+                {{ form.date_of_birth }} ( AAAA-MM-DD )
                 {% if form.date_of_birth.errors %}
                     <div class="text-danger small">{{ form.date_of_birth.errors }}</div>
                 {% endif %}
