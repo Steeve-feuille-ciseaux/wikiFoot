@@ -12,14 +12,7 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Détail de {{ entraineur.first_name }} {{ entraineur.last_name }}</h1>
-        <div>
-            <a href="{% url 'modifier_entraineur' entraineur.pk %}" class="btn btn-warning me-2">
-                <i class="fas fa-edit me-1"></i>Modifier
-            </a>
-            <a href="{% url 'supprimer_entraineur' entraineur.pk %}" class="btn btn-danger">Supprimer</a>
-        </div>
-        {% if app.user and app.user.role >= 3 %}
-        {% endif %}
+        <a href="{% url 'supprimer_entraineur' entraineur.pk %}" class="btn btn-danger">Supprimer</a>
     </div>
 
     <div class="card shadow-sm">
@@ -58,10 +51,22 @@
             {% endif %}
         </div>
 
-        <div class="card-footer bg-white border-top-0">
-            <a href="{% url 'liste_entraineurs' %}" class="btn btn-secondary">
-                <i class="fas fa-arrow-left me-1"></i>Retour à la liste
-            </a>
+        <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
+            <div>
+                <a href="{% url 'liste_entraineurs' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-1"></i>Retour à la liste
+                </a>
+                <a href="{% url 'modifier_entraineur' entraineur.pk %}" class="btn btn-warning me-2">
+                    <i class="fas fa-edit me-1"></i>Modifier
+                </a>
+            </div>
+            <div>
+                {% if not entraineur.visible %}
+                    <a href="{% url 'valider_entraineur' entraineur.pk %}" class="btn btn-success">
+                        <i class="fas fa-check me-1"></i>Valider
+                    </a>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>

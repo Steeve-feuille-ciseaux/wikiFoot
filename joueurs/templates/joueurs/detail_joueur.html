@@ -65,13 +65,18 @@
                 </div>
             </div>
 
-            <div class="mt-3">
+            <div class="mt-3 d-flex gap-2">
                 <a href="{% url 'liste_joueurs' %}" class="btn btn-secondary">
                     <i class="fas fa-arrow-left"></i> Retour à la liste
                 </a>
                 <a href="{% url 'modifier_joueur' joueur.pk %}" class="btn btn-warning">
                     <i class="fas fa-edit me-1"></i> Modifier
                 </a>
+                {% if not joueur.visible %}
+                    <a href="{% url 'valider_joueur' joueur.pk %}" class="btn btn-success ms-auto">
+                        <i class="fas fa-check me-1"></i> Valider
+                    </a>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -58,9 +58,15 @@
             {% endif %}
         </div>
 
-        <button class="btn btn-success" type="submit">
-            {{ button_label|default:"Modifier" }}
-        </button>
+        <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-primary" type="submit">
+                {{ button_label|default:"Modifier" }}
+            </button>
+            <a href="javascript:history.back()" class="btn btn-secondary">
+                Annuler
+            </a>
+        </div>
+        
     </form>
 </div>
 {% endblock %}

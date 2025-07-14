@@ -201,6 +201,14 @@ def joueur_supprimer(request, pk):
     # Optionnel : afficher une page de confirmation avant suppression
     return render(request, 'joueurs/confirm_delete_joueur.html', {'joueur': joueur})
 
+def valider_joueur(request, pk):
+    joueur = get_object_or_404(Joueur, pk=pk)
+    joueur.visible = True
+    joueur.save()
+    messages.success(request, "Le joueur a été validé avec succès.")
+
+    return redirect('liste_joueurs')
+
 # Onglet Clubs
 def liste_clubs(request):
     clubs = Club.objects.filter(visible=True)
@@ -249,6 +257,14 @@ def club_supprimer(request, pk):
         return redirect('liste_clubs')
 
     return render(request, 'clubs/confirm_delete_club.html', {'club': club})
+
+def valider_club(request, pk):
+    club = get_object_or_404(Club, pk=pk)
+    club.visible = True
+    club.save()
+    messages.success(request, "Le club a été validé avec succès.")
+
+    return redirect('liste_clubs')
 
 # Onglet Pays
 def liste_pays(request):
@@ -299,6 +315,14 @@ def supprimer_pays(request, pk):
 
     return render(request, 'pays/confirm_delete_pays.html', {'pays': pays})
 
+def valider_pays(request, pk):
+    pays = get_object_or_404(Country, pk=pk)
+    pays.visible = True
+    pays.save()
+    messages.success(request, "Le pays a été validé avec succès.")
+
+    return redirect('liste_pays')
+
 # Onglet Cartes
 def liste_cartes(request):
     cartes = Card.objects.filter(visible=True)
@@ -347,6 +371,14 @@ def supprimer_carte(request, pk):
         return redirect('liste_carte')
 
     return render(request, 'cards/confirm_delete_card.html', {'carte': carte})
+
+def valider_carte(request, pk):
+    carte = get_object_or_404(Card, pk=pk)
+    carte.visible = True
+    carte.save()
+    messages.success(request, "La carte a été validée avec succès.")
+
+    return redirect('liste_carte')
 
 # Onglet Moves
 def liste_moves(request):
@@ -397,6 +429,13 @@ def supprimer_move(request, pk):
 
     return render(request, 'moves/confirm_delete_move.html', {'move': move})
 
+def valider_move(request, pk):
+    move = get_object_or_404(Move, pk=pk)
+    move.visible = True
+    move.save()
+    messages.success(request, "L'action a été validée avec succès.")
+    return redirect('liste_moves')
+
 # Onglet Entraineurs
 def liste_entraineurs(request):
     entraineurs = Entraineur.objects.filter(visible=True)
@@ -445,3 +484,12 @@ def supprimer_entraineur(request, pk):
         return redirect('liste_entraineurs')
 
     return render(request, 'entraineurs/confirm_delete_entraineur.html', {'entraineur': entraineur})
+
+def valider_entraineur(request, pk):
+    
+    entraineur = get_object_or_404(Entraineur, pk=pk)
+    entraineur.visible = True
+    entraineur.save()
+    messages.success(request, "L'entraîneur a été validé avec succès.")
+
+    return redirect('liste_entraineurs')

@@ -25,18 +25,21 @@ v0.06.3 = Bug résolue : ajout bouton modifier joueur + champs date joueur defec
 v0.06.4 = New Feature : notification du contenu, intégrer à l'onglet Entraineurs en attente
 v0.06.5 = Update Feature : notification du contenu, Joueur, Club, Pays, Cartes, Actions
 v0.06.6.1 = Update sous-menu : onglet + notification 
-v0.06.7 = New Feature page dédié au contenu en attente
+v0.06.7 = New Feature : page dédié au contenu en attente
+v0.06.8 = New Feature : validation du contenu par un admin où modérateur
 
 ** Next step **
 en natif, ajouter createdBy et updateBy au contenu pour le tracé
 si le contenu est validé par Modérateur, l'attribut Visible deviens True
 notification pour son contenu modifier, accepté où refuser
+Notification : envoyer un e-mail ou signal lors d’une validation.
 vérifier à nouveau les conditions de validation de chaque table
 s'inspirer de cette page pour l'onglet A propos -> https://recrutement.fff.fr/
 
 ** REVENIR **
 bug sur retour en arrière après supprésion d'un joueur -> revoir le retour après un delete
 Remettre a joueurs les templates car les valeur joueurs ont été changé
+bug sur retour en arrière pour valider un contenu, le retour est sur la page liste validé au lieu de page en attente
 
 ** cmd récurrent *
 python -m venv env

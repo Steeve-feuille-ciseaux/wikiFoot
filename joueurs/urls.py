@@ -28,6 +28,7 @@ urlpatterns = [
     path('entraineurs/modifier/<int:entraineur_id>/', views.modifier_entraineur, name='modifier_entraineur'),
     path('entraineurs/supprimer/<int:pk>/', views.supprimer_entraineur, name='supprimer_entraineur'),
     path('entraineurs/en-attente/', views.waiting_entraineurs, name='waiting_entraineurs'),
+    path('entraineur/valider/<int:pk>/', views.valider_entraineur, name='valider_entraineur'),
 
     # Onglet joueurs
     path('joueurs/', views.liste_joueurs, name='liste_joueurs'),
@@ -36,6 +37,7 @@ urlpatterns = [
     path('joueurs/modifier/<int:joueur_id>/', views.modifier_joueur, name='modifier_joueur'),
     path('joueur/supprimer/<int:pk>/', views.joueur_supprimer, name='joueur_supprimer'),
     path('joueurs/en-attente/', views.waiting_joueurs, name='waiting_joueurs'),
+    path('joueur/valider/<int:pk>/', views.valider_joueur, name='valider_joueur'),
 
     # Onglet Clubs
     path('clubs/', views.liste_clubs, name='liste_clubs'),
@@ -44,6 +46,7 @@ urlpatterns = [
     path('clubs/modifier/<int:club_id>/', views.modifier_club, name='modifier_club'),
     path('clubs/supprimer/<int:pk>/', views.club_supprimer, name='club_supprimer'),
     path('clubs/en-attente/', views.waiting_clubs, name='waiting_clubs'),
+    path('club/valider/<int:pk>/', views.valider_club, name='valider_club'),
 
     # Onglet Pays
     path('pays/', views.liste_pays, name='liste_pays'),
@@ -52,6 +55,7 @@ urlpatterns = [
     path('pays/<int:pays_id>/modifier/', views.modifier_pays, name='modifier_pays'),
     path('pays/<int:pk>/supprimer/', views.supprimer_pays, name='supprimer_pays'),
     path('pays/en-attente/', views.waiting_pays, name='waiting_pays'),
+    path('pays/valider/<int:pk>/', views.valider_pays, name='valider_pays'),
 
     # Onglet Cards
     path('cartes/', views.liste_cartes, name='liste_carte'),
@@ -60,6 +64,7 @@ urlpatterns = [
     path('cartes/modifier/<int:carte_id>/', views.modifier_carte, name='modifier_carte'),
     path('cartes/supprimer/<int:pk>/', views.supprimer_carte, name='supprimer_carte'),
     path('cartes/en-attente/', views.waiting_cartes, name='waiting_cartes'),
+    path('carte/valider/<int:pk>/', views.valider_carte, name='valider_carte'),
 
     # Onglet Move
     path('moves/', views.liste_moves, name='liste_moves'),
@@ -68,6 +73,7 @@ urlpatterns = [
     path('moves/modifier/<int:move_id>/', views.modifier_move, name='modifier_move'),
     path('moves/supprimer/<int:pk>/', views.supprimer_move, name='supprimer_move'),
     path('moves/en-attente/', views.waiting_moves, name='waiting_moves'),
+    path('move/valider/<int:pk>/', views.valider_move, name='valider_move'),
 
     path('', views.home, name=''),
 ]
