@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Joueurs en attente{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/liste_joueur.css' %}">
+    {{ block.super }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Joueurs en attente de validation</h1>
+        {% if app.user and app.user.role >= 3 %}
+            <a href="{% url 'ajouter_joueur' %}" class="btn btn-primary">
+                <i class="fas fa-plus me-1"></i> Nouveau joueur
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        {% for joueur in joueurs %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if joueur.image %}
+                        <img src="{{ joueur.image.url }}"
+                             class="card-img-top"
+                             alt="Photo de {{ joueur.first_name }} {{ joueur.last_name }}"
+                             style="height: 250px; object-fit: cover;">
+                    {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                             style="height: 250px;">
+                            <i class="fas fa-user fa-4x text-secondary"></i>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ joueur.first_name }} {{ joueur.last_name }}</h5>
+                        {% if joueur.country %}
+                            <p class="card-text"><strong>Nationalité :</strong> {{ joueur.country.name }}</p>
+                        {% endif %}
+                        {% if joueur.position %}
+                            <p class="card-text"><strong>Position :</strong> {{ joueur.position }}</p>
+                        {% endif %}
+                        {% if joueur.number %}
+                            <p class="card-text"><strong>Numéro :</strong> {{ joueur.number }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <div class="btn-group w-100">
+                            <a href="{% url 'joueur_detail' joueur.pk %}" class="btn btn-info w-100">
+                                <i class="fas fa-eye"></i> Voir
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="alert alert-warning">
+                    Aucun joueur en attente pour le moment.
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -155,8 +155,12 @@ def recherche(request):
 
 # Onglet Joueurs
 def liste_joueurs(request):
-    joueurs = Joueur.objects.all()  # récupère tous les joueurs en base
+    joueurs = Joueur.objects.filter(visible=True)
     return render(request, 'joueurs/liste_joueurs.html', {'joueurs': joueurs})
+
+def waiting_joueurs(request):
+    joueurs_visibles = Joueur.objects.filter(visible=False)
+    return render(request, 'joueurs/waiting_joueurs.html', {'joueurs': joueurs_visibles})
 
 def joueur_detail(request, pk):
     joueur = get_object_or_404(Joueur, pk=pk)
@@ -199,8 +203,12 @@ def joueur_supprimer(request, pk):
 
 # Onglet Clubs
 def liste_clubs(request):
-    clubs = Club.objects.all()  # récupère tous les clubs en base
+    clubs = Club.objects.filter(visible=True)
     return render(request, 'clubs/liste_clubs.html', {'clubs': clubs})
+
+def waiting_clubs(request):
+    clubs_visibles = Club.objects.filter(visible=False)
+    return render(request, 'clubs/waiting_clubs.html', {'clubs': clubs_visibles})
 
 def club_detail(request, pk):
     club = get_object_or_404(Club, pk=pk)
@@ -243,10 +251,13 @@ def club_supprimer(request, pk):
     return render(request, 'clubs/confirm_delete_club.html', {'club': club})
 
 # Onglet Pays
-
 def liste_pays(request):
-    pays = Country.objects.all()  # Récupère tous les pays
+    pays = Country.objects.filter(visible=True)
     return render(request, 'pays/liste_pays.html', {'pays': pays})
+
+def waiting_pays(request):
+    pays_visibles = Country.objects.filter(visible=False)
+    return render(request, 'pays/waiting_pays.html', {'pays': pays_visibles})
 
 def detail_pays(request, pk):
     pays = get_object_or_404(Country, pk=pk)
@@ -290,8 +301,12 @@ def supprimer_pays(request, pk):
 
 # Onglet Cartes
 def liste_cartes(request):
-    cartes = Card.objects.all()
+    cartes = Card.objects.filter(visible=True)
     return render(request, 'cards/liste_card.html', {'cartes': cartes})
+
+def waiting_cartes(request):
+    cartes_visibles = Card.objects.filter(visible=False)
+    return render(request, 'cards/waiting_cards.html', {'cartes': cartes_visibles})
 
 def carte_detail(request, pk):
     carte = get_object_or_404(Card, pk=pk)
@@ -335,8 +350,12 @@ def supprimer_carte(request, pk):
 
 # Onglet Moves
 def liste_moves(request):
-    moves = Move.objects.all()
+    moves = Move.objects.filter(visible=True)
     return render(request, 'moves/liste_move.html', {'moves': moves})
+
+def waiting_moves(request):
+    moves_visibles = Move.objects.filter(visible=False)
+    return render(request, 'moves/waiting_moves.html', {'moves': moves_visibles})
 
 def move_detail(request, pk):
     move = get_object_or_404(Move, pk=pk)
@@ -380,8 +399,12 @@ def supprimer_move(request, pk):
 
 # Onglet Entraineurs
 def liste_entraineurs(request):
-    entraineurs = Entraineur.objects.all()
+    entraineurs = Entraineur.objects.filter(visible=True)
     return render(request, 'entraineurs/liste_entraineurs.html', {'entraineurs': entraineurs})
+
+def waiting_entraineurs(request):
+    entraineurs_visibles = Entraineur.objects.filter(visible=False)
+    return render(request, 'entraineurs/waiting_entraineurs.html', {'entraineurs': entraineurs_visibles})
 
 def entraineur_detail(request, pk):
     entraineur = get_object_or_404(Entraineur, pk=pk)

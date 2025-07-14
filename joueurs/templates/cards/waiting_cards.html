@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cartes en attente{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/liste_cartes.css' %}">
+    {{ block.super }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Cartes en attente de validation</h1>
+        {% if app.user and app.user.role >= 3 %}
+            <a href="{% url 'ajouter_carte' %}" class="btn btn-primary">
+                <i class="fas fa-plus me-1"></i> Nouvelle carte
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        {% for carte in cartes %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if carte.img %}
+                        <img src="{{ carte.img.url }}"
+                             class="card-img-top"
+                             alt="{{ carte.name }}"
+                             style="height: 250px; object-fit: cover;">
+                    {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                             style="height: 250px;">
+                            <i class="fas fa-id-card fa-4x text-secondary"></i>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ carte.name }}</h5>
+                        <p class="card-text">
+                            <strong>Numéro:</strong> {{ carte.numero }}<br>
+                            <strong>Position:</strong> {{ carte.position }}<br>
+                            <strong>Équipe:</strong>
+                            {% if carte.club %}{{ carte.club.name }}
+                            {% elif carte.national_team %}{{ carte.national_team.name }}
+                            {% else %}<em>Aucune</em>{% endif %}
+                        </p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <div class="btn-group w-100">
+                            <a href="{% url 'detail_carte' carte.pk %}" class="btn btn-info">
+                                <i class="fas fa-eye"></i> Voir
+                            </a>
+                            {% if app.user and app.user.role >= 3 %}
+                                <a href="{% url 'modifier_carte' carte.pk %}" class="btn btn-warning">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form method="post" action="{% url 'supprimer_carte' carte.pk %}" class="d-inline" onsubmit="return confirm('Supprimer cette carte ?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="alert alert-warning">Aucune carte en attente.</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

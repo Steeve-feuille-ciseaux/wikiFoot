@@ -49,7 +49,7 @@
                                 {% endif %}
                                 {% if user.is_authenticated and user.profile.rank >= 3 and visible_coaches_count > 0 %}
                                     <li>
-                                        <a class="dropdown-item" href="#">Entraineur en attente <span class="badge bg-warning">{{ visible_coaches_count }}</span></a>
+                                        <a class="dropdown-item" href="{% url 'waiting_entraineurs' %}">Entraineur en attente <span class="badge bg-warning">{{ visible_coaches_count }}</span></a>
                                     </li>
                                 {% endif %}
                             </ul>
@@ -79,7 +79,7 @@
                                     <li><a class="dropdown-item" href="{% url 'ajouter_joueur' %}">Nouveau joueur</a></li>
                                 {% endif %}
                                 {% if user.is_authenticated and user.profile.rank >= 3 and visible_joueurs_count > 0 %}
-                                    <li><a class="dropdown-item" href="#">
+                                    <li><a class="dropdown-item" href="{% url 'waiting_joueurs' %}">
                                         Joueur en attente <span class="badge bg-warning">{{ visible_joueurs_count }}</span>
                                     </a></li>
                                 {% endif %}
@@ -97,7 +97,7 @@
                                     <li><a class="dropdown-item" href="{% url 'ajouter_club' %}">Nouveau club</a></li>
                                 {% endif %}
                                 {% if user.is_authenticated and user.profile.rank >= 3 and visible_clubs_count > 0 %}
-                                    <li><a class="dropdown-item" href="#">
+                                    <li><a class="dropdown-item" href="{% url 'waiting_clubs' %}">
                                         Club en attente <span class="badge bg-warning">{{ visible_clubs_count }}</span>
                                     </a></li>
                                 {% endif %}
@@ -115,7 +115,7 @@
                                     <li><a class="dropdown-item" href="{% url 'ajouter_pays' %}">Nouveau pays</a></li>
                                 {% endif %}
                                 {% if user.is_authenticated and user.profile.rank >= 3 and visible_countries_count > 0 %}
-                                    <li><a class="dropdown-item" href="#">
+                                    <li><a class="dropdown-item" href="{% url 'waiting_pays' %}">
                                         Pays en attente <span class="badge bg-warning">{{ visible_countries_count }}</span>
                                     </a></li>
                                 {% endif %}
@@ -133,7 +133,7 @@
                                     <li><a class="dropdown-item" href="{% url 'ajouter_carte' %}">Nouvelle carte</a></li>
                                 {% endif %}
                                 {% if user.is_authenticated and user.profile.rank >= 3 and visible_cards_count > 0 %}
-                                    <li><a class="dropdown-item" href="#">
+                                    <li><a class="dropdown-item" href="{% url 'waiting_cartes' %}">
                                         Cartes en attente <span class="badge bg-warning">{{ visible_cards_count }}</span>
                                     </a></li>
                                 {% endif %}
@@ -151,7 +151,7 @@
                                     <li><a class="dropdown-item" href="{% url 'ajouter_move' %}">Nouvelle action</a></li>
                                 {% endif %}
                                 {% if user.is_authenticated and user.profile.rank >= 3 and visible_moves_count > 0 %}
-                                    <li><a class="dropdown-item" href="#">
+                                    <li><a class="dropdown-item" href="{% url 'waiting_moves' %}">
                                         Action en attente <span class="badge bg-warning">{{ visible_moves_count }}</span>
                                     </a></li>
                                 {% endif %}

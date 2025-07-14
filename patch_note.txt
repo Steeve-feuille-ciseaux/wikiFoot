@@ -25,6 +25,7 @@ v0.06.3 = Bug résolue : ajout bouton modifier joueur + champs date joueur defec
 v0.06.4 = New Feature : notification du contenu, intégrer à l'onglet Entraineurs en attente
 v0.06.5 = Update Feature : notification du contenu, Joueur, Club, Pays, Cartes, Actions
 v0.06.6.1 = Update sous-menu : onglet + notification 
+v0.06.7 = New Feature page dédié au contenu en attente
 
 ** Next step **
 en natif, ajouter createdBy et updateBy au contenu pour le tracé
