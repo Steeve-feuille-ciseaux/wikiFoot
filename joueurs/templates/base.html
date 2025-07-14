@@ -47,13 +47,10 @@
                                 {% if user.is_authenticated and user.profile.rank >= 2 %}
                                     <li><a class="dropdown-item" href="{% url 'ajouter_entraineur' %}">Nouvel entraineur</a></li>
                                 {% endif %}
-                                {% if user.is_authenticated and user.profile.rank >= 3 %}
-                                    <li><a class="dropdown-item" href="#">
-                                        Entraineur visible
-                                        {% if visible_coaches_count > 0 %}
-                                            <span class="badge bg-warning">{{ visible_coaches_count }}</span>
-                                        {% endif %}
-                                    </a></li>
+                                {% if user.is_authenticated and user.profile.rank >= 3 and visible_coaches_count > 0 %}
+                                    <li>
+                                        <a class="dropdown-item" href="#">Entraineur en attente <span class="badge bg-warning">{{ visible_coaches_count }}</span></a>
+                                    </li>
                                 {% endif %}
                             </ul>
                         </li>
@@ -81,12 +78,9 @@
                                 {% if user.is_authenticated and user.profile.rank >= 2 %}
                                     <li><a class="dropdown-item" href="{% url 'ajouter_joueur' %}">Nouveau joueur</a></li>
                                 {% endif %}
-                                {% if user.is_authenticated and user.profile.rank >= 3 %}
+                                {% if user.is_authenticated and user.profile.rank >= 3 and visible_joueurs_count > 0 %}
                                     <li><a class="dropdown-item" href="#">
-                                        Joueur en attente
-                                        {% if visible_joueurs_count > 0 %}
-                                            <span class="badge bg-warning">{{ visible_joueurs_count }}</span>
-                                        {% endif %}
+                                        Joueur en attente <span class="badge bg-warning">{{ visible_joueurs_count }}</span>
                                     </a></li>
                                 {% endif %}
                             </ul>
@@ -102,12 +96,9 @@
                                 {% if user.is_authenticated and user.profile.rank >= 2 %}
                                     <li><a class="dropdown-item" href="{% url 'ajouter_club' %}">Nouveau club</a></li>
                                 {% endif %}
-                                {% if user.is_authenticated and user.profile.rank >= 3 %}
+                                {% if user.is_authenticated and user.profile.rank >= 3 and visible_clubs_count > 0 %}
                                     <li><a class="dropdown-item" href="#">
-                                        Club en attente
-                                        {% if visible_clubs_count > 0 %}
-                                            <span class="badge bg-warning">{{ visible_clubs_count }}</span>
-                                        {% endif %}
+                                        Club en attente <span class="badge bg-warning">{{ visible_clubs_count }}</span>
                                     </a></li>
                                 {% endif %}
                             </ul>
@@ -123,12 +114,9 @@
                                 {% if user.is_authenticated and user.profile.rank >= 2 %}
                                     <li><a class="dropdown-item" href="{% url 'ajouter_pays' %}">Nouveau pays</a></li>
                                 {% endif %}
-                                {% if user.is_authenticated and user.profile.rank >= 3 %}
+                                {% if user.is_authenticated and user.profile.rank >= 3 and visible_countries_count > 0 %}
                                     <li><a class="dropdown-item" href="#">
-                                        Pays visibles
-                                        {% if visible_countries_count > 0 %}
-                                            <span class="badge bg-warning">{{ visible_countries_count }}</span>
-                                        {% endif %}
+                                        Pays en attente <span class="badge bg-warning">{{ visible_countries_count }}</span>
                                     </a></li>
                                 {% endif %}
                             </ul>
@@ -144,12 +132,9 @@
                                 {% if user.is_authenticated and user.profile.rank >= 2 %}
                                     <li><a class="dropdown-item" href="{% url 'ajouter_carte' %}">Nouvelle carte</a></li>
                                 {% endif %}
-                                {% if user.is_authenticated and user.profile.rank >= 3 %}
+                                {% if user.is_authenticated and user.profile.rank >= 3 and visible_cards_count > 0 %}
                                     <li><a class="dropdown-item" href="#">
-                                        Cartes visibles
-                                        {% if visible_cards_count > 0 %}
-                                            <span class="badge bg-warning">{{ visible_cards_count }}</span>
-                                        {% endif %}
+                                        Cartes en attente <span class="badge bg-warning">{{ visible_cards_count }}</span>
                                     </a></li>
                                 {% endif %}
                             </ul>
@@ -165,12 +150,9 @@
                                 {% if user.is_authenticated and user.profile.rank >= 2 %}
                                     <li><a class="dropdown-item" href="{% url 'ajouter_move' %}">Nouvelle action</a></li>
                                 {% endif %}
-                                {% if user.is_authenticated and user.profile.rank >= 3 %}
+                                {% if user.is_authenticated and user.profile.rank >= 3 and visible_moves_count > 0 %}
                                     <li><a class="dropdown-item" href="#">
-                                        Mouvements visibles
-                                        {% if visible_moves_count > 0 %}
-                                            <span class="badge bg-warning">{{ visible_moves_count }}</span>
-                                        {% endif %}
+                                        Action en attente <span class="badge bg-warning">{{ visible_moves_count }}</span>
                                     </a></li>
                                 {% endif %}
                             </ul>
