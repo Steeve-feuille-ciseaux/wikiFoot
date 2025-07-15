@@ -453,7 +453,14 @@ def ajouter_entraineur(request):
     if request.method == 'POST':
         form = EntraineurForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            entraineur = form.save(commit=False)
+
+            # On récupère le profil de l'utilisateur connecté
+            if hasattr(request.user, 'profile'):
+                entraineur.created_by = request.user.profile
+                entraineur.updated_by = request.user.profile  # peut être le même à la création
+
+            entraineur.save()
             messages.success(request, "L'entraîneur a bien été ajouté.")
             return redirect('liste_entraineurs')
     else:
@@ -467,7 +474,12 @@ def modifier_entraineur(request, entraineur_id):
     if request.method == 'POST':
         form = EntraineurForm(request.POST, request.FILES, instance=entraineur)
         if form.is_valid():
-            form.save()
+            entraineur = form.save(commit=False)
+
+            if hasattr(request.user, 'profile'):
+                entraineur.updated_by = request.user.profile
+
+            entraineur.save()
             messages.success(request, "L'entraîneur a bien été modifié.")
             return redirect('entraineur_detail', pk=entraineur.id)
     else:

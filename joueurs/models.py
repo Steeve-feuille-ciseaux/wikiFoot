@@ -242,6 +242,12 @@ class Entraineur(models.Model):
     career_player = models.OneToOneField('Joueur', on_delete=models.SET_NULL, null=True, blank=True, related_name='entraineur_carriere')
     visible = models.BooleanField(default=False)
 
+    # Suivi
+    created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='entraineurs_created')
+    updated_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='entraineurs_updated')
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
+    updated_date = models.DateTimeField(auto_now=True, null=True)
+
     # championship_win = models.ForeignKey('ChampionshipWin', on_delete=models.SET_NULL, null=True, blank=True)
     # competition_win = models.ForeignKey('CompetitionWin', on_delete=models.SET_NULL, null=True, blank=True)
     # award = models.ForeignKey('PlayerSuccess', on_delete=models.SET_NULL, null=True, blank=True)

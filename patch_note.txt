@@ -27,16 +27,17 @@ v0.06.5 = Update Feature : notification du contenu, Joueur, Club, Pays, Cartes, 
 v0.06.6.1 = Update sous-menu : onglet + notification 
 v0.06.7 = New Feature : page dédié au contenu en attente
 v0.06.8 = New Feature : validation du contenu par un admin où modérateur
+v0.06.8.1 = Start Feature : ajouter createdBy et updateBy au contenu pour le Suivi
 
 ** Next step **
-en natif, ajouter createdBy et updateBy au contenu pour le tracé
-si le contenu est validé par Modérateur, l'attribut Visible deviens True
-notification pour son contenu modifier, accepté où refuser
+poursuivre l'historique pour les autre tables
+Notification : être informer dans l'onglet son contenu modifier, accepté où refuser
 Notification : envoyer un e-mail ou signal lors d’une validation.
 vérifier à nouveau les conditions de validation de chaque table
 s'inspirer de cette page pour l'onglet A propos -> https://recrutement.fff.fr/
 
 ** REVENIR **
+reproduire le bug lorsqu'on modifie un contenu parfois il se met en attente *à réfléchir* 
 bug sur retour en arrière après supprésion d'un joueur -> revoir le retour après un delete
 Remettre a joueurs les templates car les valeur joueurs ont été changé
 bug sur retour en arrière pour valider un contenu, le retour est sur la page liste validé au lieu de page en attente

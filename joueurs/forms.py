@@ -89,7 +89,7 @@ class MoveForm(forms.ModelForm):
 class EntraineurForm(forms.ModelForm):
     class Meta:
         model = Entraineur
-        fields = '__all__'
+        exclude = ['created_by', 'updated_by', 'created_date', 'updated_date']
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
