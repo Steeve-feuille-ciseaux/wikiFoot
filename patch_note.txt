@@ -29,6 +29,7 @@ v0.06.7 = New Feature : page dédié au contenu en attente
 v0.06.8 = New Feature : validation du contenu par un admin où modérateur
 v0.06.8.1 = Start Feature : ajouter createdBy et updateBy au contenu Entraineurs pour le Suivi
 v0.07.0 = Complete Feature : achèvement de v0.06.8.1 avec les table Joueurs, Clubs, Pays, Cartes, Action
+v0.07.1 = rendre unique le nom des entraineur, joueur, club, pays, carte et action + traduction message d'erreur
 
 ** Next step **
 poursuivre l'historique pour les autre tables
@@ -38,7 +39,6 @@ vérifier à nouveau les conditions de validation de chaque table
 s'inspirer de cette page pour l'onglet A propos -> https://recrutement.fff.fr/
 
 ** REVENIR **
-rendre unique le nom des entraineur, joueur, club, pays
 reproduire le bug lorsqu'on modifie un contenu parfois il se met en attente *à réfléchir* 
 bug sur retour en arrière après supprésion d'un joueur -> revoir le retour après un delete
 Remettre a joueurs les templates car les valeur joueurs ont été changé

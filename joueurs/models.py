@@ -29,6 +29,11 @@ class Country(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name'], name='unique_name_country')
+        ]
+
 class Joueur(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -55,6 +60,11 @@ class Joueur(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['first_name', 'last_name'], name='unique_full_name_joueur')
+        ]
 
 class Card(models.Model):
     joueur = models.ForeignKey('Joueur', on_delete=models.SET_NULL, null=True, blank=True, related_name='cards')
@@ -112,6 +122,11 @@ class Card(models.Model):
         equipe = club_nom if club_nom else national_team_nom if national_team_nom else 'No Team'
 
         return f"{joueur_nom} {self.numero} - {equipe} - {self.name}"
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name'], name='unique_name_cards')
+        ]
     
 class Club(models.Model):
     name = models.CharField(max_length=100)
@@ -131,6 +146,11 @@ class Club(models.Model):
 
     def __str__(self):
         return self.name   
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name'], name='unique_name_club')
+        ]
     
 class LineUp(models.Model):
     club = models.ForeignKey('Club', on_delete=models.CASCADE, related_name='line_up', null=True, blank=True)
@@ -258,6 +278,11 @@ class Move(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.typeMove}"
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name'], name='unique_name_moves')
+        ]
     
 class Entraineur(models.Model):
     first_name = models.CharField(max_length=100)
@@ -287,6 +312,11 @@ class Entraineur(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['first_name', 'last_name'], name='unique_full_name_entraineur')
+        ]
 
 class Style(models.Model):
     name = models.CharField(max_length=100)
