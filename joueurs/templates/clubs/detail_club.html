@@ -38,6 +38,20 @@
                 </tbody>
             </table>
         </div>
+        {% if user.is_authenticated and user.profile.rank >= 2 %}
+            <hr>
+            <p>
+                {% if club.created_by %}
+                    <strong>Créé par :</strong> {{ club.created_by.user.username }} 
+                    <strong>le</strong> {{ club.created_date|date:"d/m/Y H:i" }}<br>
+                {% endif %}
+
+                {% if club.updated_by %}
+                    <strong>Checké par :</strong> {{ club.updated_by.user.username }} 
+                    <strong>le</strong> {{ club.updated_date|date:"d/m/Y H:i" }}
+                {% endif %}
+            </p>
+        {% endif %}
     </div>
 
     <div class="mt-3 d-flex gap-2 flex-wrap align-items-center">

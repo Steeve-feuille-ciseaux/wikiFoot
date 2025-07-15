@@ -41,6 +41,20 @@
                             <p>{{ move.resume }}</p>
                         </div>
                     </div>
+                    {% if user.is_authenticated and user.profile.rank >= 2 %}
+                        <hr>
+                        <p class="mt-3">
+                            {% if move.created_by %}
+                                <strong>Créé par :</strong> {{ move.created_by.user.username }}
+                                <strong>le</strong> {{ move.created_date|date:"d/m/Y H:i" }}<br>
+                            {% endif %}
+
+                            {% if move.updated_by %}
+                                <strong>Checké par :</strong> {{ move.updated_by.user.username }}
+                                <strong>le</strong> {{ move.updated_date|date:"d/m/Y H:i" }}
+                            {% endif %}
+                        </p>
+                    {% endif %}
                 </div>
             </div>
 

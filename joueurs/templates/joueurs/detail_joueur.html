@@ -63,6 +63,17 @@
                         </div>
                     {% endif %}
                 </div>
+
+                {% if user.is_authenticated and user.profile.rank >= 2 %}
+                    <hr>
+                    {% if joueur.created_by %}
+                        <p><strong>Créé par :</strong> {{ joueur.created_by.user.username }} <strong>le</strong> {{ joueur.created_date|date:"d/m/Y H:i" }}</p>
+                    {% endif %}
+                    {% if joueur.updated_by %}
+                        <p><strong>Checké par :</strong> {{ joueur.updated_by.user.username }} <strong>le</strong> {{ joueur.updated_date|date:"d/m/Y H:i" }}</p>
+                    {% endif %}
+                {% endif %}
+
             </div>
 
             <div class="mt-3 d-flex gap-2">

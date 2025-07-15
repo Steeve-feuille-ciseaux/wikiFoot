@@ -8,7 +8,7 @@ from .models import Profile
 class JoueurForm(forms.ModelForm):
     class Meta:
         model = Joueur
-        fields = '__all__'
+        exclude = ['created_by', 'updated_by', 'created_date', 'updated_date']
         widgets = {
             'date_naissance': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'position': forms.TextInput(attrs={'class': 'form-control'}),
@@ -24,7 +24,7 @@ class JoueurForm(forms.ModelForm):
 class ClubForm(forms.ModelForm):
     class Meta:
         model = Club
-        fields = '__all__'
+        exclude = ['created_by', 'updated_by', 'created_date', 'updated_date']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'blazon': forms.FileInput(attrs={'class': 'form-control'}),
@@ -37,7 +37,7 @@ class ClubForm(forms.ModelForm):
 class CountryForm(forms.ModelForm):
     class Meta:
         model = Country
-        fields = '__all__'
+        exclude = ['created_by', 'updated_by', 'created_date', 'updated_date']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'continent': forms.Select(attrs={'class': 'form-control'}),
@@ -51,7 +51,7 @@ class CountryForm(forms.ModelForm):
 class CardForm(forms.ModelForm):
     class Meta:
         model = Card
-        fields = '__all__'
+        exclude = ['created_by', 'updated_by', 'created_date', 'updated_date']
         widgets = {
             'joueur': forms.Select(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -77,7 +77,7 @@ class CardForm(forms.ModelForm):
 class MoveForm(forms.ModelForm):
     class Meta:
         model = Move
-        fields = '__all__'
+        exclude = ['created_by', 'updated_by', 'created_date', 'updated_date']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom de l’action'}),
             'resume': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Résumé de l’action', 'rows': 4}),

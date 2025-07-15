@@ -166,12 +166,22 @@ def joueur_detail(request, pk):
     joueur = get_object_or_404(Joueur, pk=pk)
     return render(request, 'joueurs/detail_joueur.html', {'joueur': joueur})
 
+from django.contrib import messages
+
 def ajouter_joueur(request):
     if request.method == 'POST':
         form = JoueurForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('liste_joueurs')  # Modifie selon ton nom de vue de liste
+            joueur = form.save(commit=False)
+
+            # Attribution du créateur et modificateur initial
+            if hasattr(request.user, 'profile'):
+                joueur.created_by = request.user.profile
+                joueur.updated_by = request.user.profile
+
+            joueur.save()
+            messages.success(request, "Le joueur a bien été ajouté et en attente d'être validé.")
+            return redirect('liste_joueurs')
     else:
         form = JoueurForm()
 
@@ -183,7 +193,14 @@ def modifier_joueur(request, joueur_id):
     if request.method == 'POST':
         form = JoueurForm(request.POST, request.FILES, instance=joueur)
         if form.is_valid():
-            form.save()
+            joueur = form.save(commit=False)
+
+            # Mise à jour du modificateur
+            if hasattr(request.user, 'profile'):
+                joueur.updated_by = request.user.profile
+
+            joueur.save()
+            messages.warning(request, "Le joueur est en attente, checké puis validez.")
             return redirect('joueur_detail', joueur.id)
     else:
         form = JoueurForm(instance=joueur)
@@ -226,13 +243,20 @@ def ajouter_club(request):
     if request.method == 'POST':
         form = ClubForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Le club a bien été ajouté.")
+            club = form.save(commit=False)
+
+            if hasattr(request.user, 'profile'):
+                club.created_by = request.user.profile
+                club.updated_by = request.user.profile
+
+            club.save()
+            messages.success(request, "Le club a bien été ajouté et en attente d'être validé.")
             return redirect('liste_clubs')
     else:
         form = ClubForm()
 
     return render(request, 'clubs/ajouter_club.html', {'form': form})
+
 
 def modifier_club(request, club_id):
     club = get_object_or_404(Club, id=club_id)
@@ -240,8 +264,13 @@ def modifier_club(request, club_id):
     if request.method == 'POST':
         form = ClubForm(request.POST, request.FILES, instance=club)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Le club a bien été modifié.")
+            club = form.save(commit=False)
+
+            if hasattr(request.user, 'profile'):
+                club.updated_by = request.user.profile
+
+            club.save()
+            messages.warning(request, "Le club est en attente, checké puis validez.")
             return redirect('club_detail', pk=club.id)
     else:
         form = ClubForm(instance=club)
@@ -283,8 +312,14 @@ def ajouter_pays(request):
     if request.method == 'POST':
         form = CountryForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Le pays a bien été ajouté.")
+            pays = form.save(commit=False)
+
+            if hasattr(request.user, 'profile'):
+                pays.created_by = request.user.profile
+                pays.updated_by = request.user.profile
+
+            pays.save()
+            messages.success(request, "Le pays a bien été ajouté et en attente de validation.")
             return redirect('liste_pays')
     else:
         form = CountryForm()
@@ -297,8 +332,13 @@ def modifier_pays(request, pays_id):
     if request.method == 'POST':
         form = CountryForm(request.POST, request.FILES, instance=pays)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Le pays a bien été modifié.")
+            pays = form.save(commit=False)
+
+            if hasattr(request.user, 'profile'):
+                pays.updated_by = request.user.profile
+
+            pays.save()
+            messages.warning(request, "Le pays a été modifié et est en attente de validation.")
             return redirect('detail_pays', pk=pays.id)
     else:
         form = CountryForm(instance=pays)
@@ -340,8 +380,14 @@ def ajouter_carte(request):
     if request.method == 'POST':
         form = CardForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            messages.success(request, "La carte a bien été ajoutée.")
+            carte = form.save(commit=False)
+
+            if hasattr(request.user, 'profile'):
+                carte.created_by = request.user.profile
+                carte.updated_by = request.user.profile
+
+            carte.save()
+            messages.success(request, "La carte a bien été ajoutée et est en attente de validation.")
             return redirect('liste_carte')
     else:
         form = CardForm()
@@ -354,7 +400,12 @@ def modifier_carte(request, carte_id):
     if request.method == 'POST':
         form = CardForm(request.POST, request.FILES, instance=carte)
         if form.is_valid():
-            form.save()
+            carte = form.save(commit=False)
+
+            if hasattr(request.user, 'profile'):
+                carte.updated_by = request.user.profile
+
+            carte.save()
             messages.success(request, "La carte a bien été modifiée.")
             return redirect('detail_carte', pk=carte.id)
     else:
@@ -397,8 +448,14 @@ def ajouter_move(request):
     if request.method == 'POST':
         form = MoveForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            messages.success(request, "L'action a bien été ajoutée.")
+            move = form.save(commit=False)
+
+            if hasattr(request.user, 'profile'):
+                move.created_by = request.user.profile
+                move.updated_by = request.user.profile
+
+            move.save()
+            messages.success(request, "L'action a bien été ajoutée et est en attente de validation.")
             return redirect('liste_moves')
     else:
         form = MoveForm()
@@ -411,7 +468,12 @@ def modifier_move(request, move_id):
     if request.method == 'POST':
         form = MoveForm(request.POST, request.FILES, instance=move)
         if form.is_valid():
-            form.save()
+            move = form.save(commit=False)
+
+            if hasattr(request.user, 'profile'):
+                move.updated_by = request.user.profile
+
+            move.save()
             messages.success(request, "L'action a bien été modifiée.")
             return redirect('move_detail', pk=move.id)
     else:
@@ -480,7 +542,7 @@ def modifier_entraineur(request, entraineur_id):
                 entraineur.updated_by = request.user.profile
 
             entraineur.save()
-            messages.success(request, "L'entraîneur a bien été modifié.")
+            messages.warning(request, "L'entraîneur est en attente, Veullez validez afin qu'il soit visible de tous.")
             return redirect('entraineur_detail', pk=entraineur.id)
     else:
         form = EntraineurForm(instance=entraineur)

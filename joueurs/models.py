@@ -20,6 +20,12 @@ class Country(models.Model):
     logo_federation = models.ImageField(upload_to='federation/', null=True, blank=True)
     visible = models.BooleanField(default=False)
 
+    # Suivi
+    created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='pays_created')
+    updated_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='pays_updated')
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
+    updated_date = models.DateTimeField(auto_now=True, null=True)
+
     def __str__(self):
         return self.name
 
@@ -41,6 +47,12 @@ class Joueur(models.Model):
     # national_team = models.ForeignKey('NationalTeam', on_delete=models.SET_NULL, null=True, blank=True)
     visible = models.BooleanField(default=False)
 
+    # Suivi
+    created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='joueurs_created')
+    updated_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='joueurs_updated')
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
+    updated_date = models.DateTimeField(auto_now=True, null=True)
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -58,6 +70,12 @@ class Card(models.Model):
     match = models.CharField(max_length=100)
     date = models.DateTimeField()
     visible = models.BooleanField(default=False)
+
+    # Suivi
+    created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='cards_created')
+    updated_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='cards_updated')
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
+    updated_date = models.DateTimeField(auto_now=True, null=True)
 
     # Nouvelles relations vers Move
     move_select1 = models.ForeignKey('Move', on_delete=models.SET_NULL, null=True, blank=True, related_name='cards_select1')
@@ -104,6 +122,12 @@ class Club(models.Model):
     # card_player = models.OneToOneField(Card, on_delete=models.SET_NULL, null=True, blank=True, unique=True)
     stade = models.CharField(max_length=100)
     visible = models.BooleanField(default=False)
+
+    # Suivi
+    created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='clubs_created')
+    updated_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='clubs_updated')
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
+    updated_date = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.name   
@@ -225,6 +249,12 @@ class Move(models.Model):
     gif = models.ImageField(upload_to='Gifs/', null=True, blank=True)
     typeMove  = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='moves')
     visible = models.BooleanField(default=False)
+
+    # Suivi
+    created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='moves_created')
+    updated_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='moves_updated')
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
+    updated_date = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return f"{self.name} - {self.typeMove}"

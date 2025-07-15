@@ -50,12 +50,14 @@
                 <p><strong>Résumé:</strong> {{ entraineur.resume|linebreaks }}</p>
             {% endif %}
 
-            {% if entraineur.created_by %}
-                <p><strong>Créé par :</strong> {{ entraineur.created_by.user.username }} <strong>à</strong> {{ entraineur.created_date|date:"d/m/Y H:i" }}</p>
-            {% endif %}
+            {% if user.is_authenticated and user.profile.rank >= 2 %}
+                {% if entraineur.created_by %}
+                    <p><strong>Créé par :</strong> {{ entraineur.created_by.user.username }} <strong>à</strong> {{ entraineur.created_date|date:"d/m/Y H:i" }}</p>
+                {% endif %}
 
-            {% if entraineur.updated_by %}
-                <p><strong>Vérifié par :</strong> {{ entraineur.updated_by.user.username }} <strong>à</strong> {{ entraineur.updated_date|date:"d/m/Y H:i" }}</p>
+                {% if entraineur.updated_by %}
+                    <p><strong>Checké par :</strong> {{ entraineur.updated_by.user.username }} <strong>à</strong> {{ entraineur.updated_date|date:"d/m/Y H:i" }}</p>
+                {% endif %}
             {% endif %}
         </div>
 
