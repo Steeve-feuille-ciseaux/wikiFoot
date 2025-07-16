@@ -23,7 +23,7 @@
                 <tr>
                     <td>{{ user.username }}</td>
                     <td>{{ user.email }}</td>
-                    <td>{{ user.profile.role }}</td>
+                    <td>{{ user.profile.get_role_display }}</td>
                     <td>{{ user.profile.rank }}</td>
                     <td>{{ user.date_joined|date:"d/m/Y H:i" }}</td>
                     <td>

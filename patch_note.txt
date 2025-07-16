@@ -33,6 +33,7 @@ v0.07.1 = rendre unique le nom des entraineur, joueur, club, pays, carte et acti
 v0.08.0 = New Feature : sous-menu historique de son contenu ainsi du contenu général
 v0.08.0.1 = Update template : validation_dashboard_user.html possède Modifié par
 v0.08.1 = Update Feature : sous-menu historique améliorer avec l'user, date et heure
+v0.08.1.1 = Update template : afficher les rôles utilisateur en français avec ROLE_CHOICES du models.py
 
 ** Next step **
 Notification : être informer dans l'onglet son contenu modifier, accepté où refuser
