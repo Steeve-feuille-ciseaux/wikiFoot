@@ -4,6 +4,7 @@ from .views import register, liste_utilisateurs
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from .views import CustomPasswordChangeView
+from .views import tableau_validation_utilisateur
 
 urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
@@ -17,6 +18,9 @@ urlpatterns = [
     path('utilisateur/<int:pk>/', views.utilisateur_detail, name='utilisateur_detail'),
     path('utilisateur/<int:pk>/edit/', views.utilisateur_edit, name='utilisateur_edit'),
     path('utilisateur/<int:pk>/delete/', views.utilisateur_delete, name='utilisateur_delete'),
+    path('validation-dashboard/', views.validation_dashboard, name='validation_dashboard'),
+    path('validation/mes-contributions/', tableau_validation_utilisateur, name='validation_utilisateur'),
+
 
     # Feature Recherche
     path('recherche/', views.recherche, name='recherche'),

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Mes contributions - Validation{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Mes éléments validés ou en attente</h2>
+
+    {% if has_content %}
+        {% for section in sections %}
+            {% if section.valides or section.attente %}
+                <div class="card mb-5 shadow-sm">
+                    <div class="card-header bg-dark text-white">
+                        <h4 class="mb-0">{{ section.label }}</h4>
+                    </div>
+                    <div class="card-body">
+
+                        {% if section.valides %}
+                            <h5 class="text-success">✅ Validés</h5>
+                            <table class="table table-bordered table-hover table-sm align-middle">
+                                <thead class="table-success">
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>ID</th>
+                                        <th>Statut</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in section.valides %}
+                                        <tr>
+                                            <td>{{ item }}</td>
+                                            <td>{{ item.pk }}</td>
+                                            <td><span class="badge bg-success">Validé</span></td>
+                                            <td>
+                                                <a href="{% url section.detail_url_name item.pk %}" class="btn btn-sm btn-info" title="Voir">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+
+                        {% if section.attente %}
+                            <h5 class="text-warning mt-4">⏳ En attente</h5>
+                            <table class="table table-bordered table-hover table-sm align-middle">
+                                <thead class="table-warning">
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>ID</th>
+                                        <th>Statut</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in section.attente %}
+                                        <tr>
+                                            <td>{{ item }}</td>
+                                            <td>{{ item.pk }}</td>
+                                            <td><span class="badge bg-warning text-dark">En attente</span></td>
+                                            <td>
+                                                <a href="{% url section.detail_url_name item.pk %}" class="btn btn-sm btn-info" title="Voir">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info text-center mt-5 shadow-sm">
+            <h5 class="mb-3">Aucun contenu trouvé</h5>
+            <p>Vous n'avez encore rien ajouté ou modifié.</p>
+            <p class="mb-0">Utilisez les formulaires disponibles dans les sections Joueurs, Clubs, Cartes, etc. pour contribuer à la plateforme.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

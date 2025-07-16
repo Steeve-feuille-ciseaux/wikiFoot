@@ -15,6 +15,11 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 
+# Accueil
+def home(request):
+    return render(request, 'base.html')
+
+# Onglet Management user
 @login_required
 def dashboard(request):
     return render(request, 'base.html')
@@ -130,8 +135,86 @@ def register(request):
     
     return render(request, 'registration/register.html', {'form': form})
 
-def home(request):
-    return render(request, 'base.html')
+# Visuel général sur son contenu
+@login_required
+@user_passes_test(lambda u: u.profile.rank >= 3)
+def tableau_validation_utilisateur(request):
+    profile = request.user.profile
+
+    def get_items(model, label, detail_url_name):
+        valides = model.objects.filter(
+            visible=True
+        ).filter(created_by=profile) | model.objects.filter(
+            visible=True, updated_by=profile
+        )
+
+        attente = model.objects.filter(
+            visible=False
+        ).filter(created_by=profile) | model.objects.filter(
+            visible=False, updated_by=profile
+        )
+
+        return {'label': label, 'valides': valides.distinct(), 'attente': attente.distinct(), 'detail_url_name': detail_url_name}
+
+    sections = [
+        get_items(Joueur, 'Joueurs', 'joueur_detail'),
+        get_items(Entraineur, 'Entraîneurs', 'entraineur_detail'),
+        get_items(Club, 'Clubs', 'club_detail'),
+        get_items(Country, 'Pays', 'detail_pays'),
+        get_items(Card, 'Cartes', 'detail_carte'),
+        get_items(Move, 'Actions', 'move_detail'),
+    ]
+
+    # Vérifie s’il n’y a aucun élément au total
+    has_content = any(section['valides'] or section['attente'] for section in sections)
+
+    return render(request, 'registration/validation_dashboard_user.html', {'sections': sections, 'has_content': has_content})
+
+# Visuel sur l'ensemble du contenu
+@login_required
+@user_passes_test(lambda u: u.profile.rank >= 2)
+def validation_dashboard(request):
+    sections = [
+        {
+            'label': 'Joueurs',
+            'valides': Joueur.objects.filter(visible=True),
+            'attente': Joueur.objects.filter(visible=False),
+            'detail_url_name': 'joueur_detail'
+        },
+        {
+            'label': 'Entraîneurs',
+            'valides': Entraineur.objects.filter(visible=True),
+            'attente': Entraineur.objects.filter(visible=False),
+            'detail_url_name': 'entraineur_detail'
+        },
+        {
+            'label': 'Clubs',
+            'valides': Club.objects.filter(visible=True),
+            'attente': Club.objects.filter(visible=False),
+            'detail_url_name': 'club_detail'
+        },
+        {
+            'label': 'Pays',
+            'valides': Country.objects.filter(visible=True),
+            'attente': Country.objects.filter(visible=False),
+            'detail_url_name': 'detail_pays'
+        },
+        {
+            'label': 'Cartes',
+            'valides': Card.objects.filter(visible=True),
+            'attente': Card.objects.filter(visible=False),
+            'detail_url_name': 'detail_carte'
+        },
+        {
+            'label': 'Actions',
+            'valides': Move.objects.filter(visible=True),
+            'attente': Move.objects.filter(visible=False),
+            'detail_url_name': 'move_detail'
+        },
+    ]
+
+    return render(request, 'registration/validation_dashboard.html', {'sections': sections})
+
 
 # Feature Rechercher
 def recherche(request):
@@ -474,7 +557,7 @@ def modifier_move(request, move_id):
                 move.updated_by = request.user.profile
 
             move.save()
-            messages.success(request, "L'action a bien été modifiée.")
+            messages.success(request, "La carte a bien été ajoutée et est en attente de validation.")
             return redirect('move_detail', pk=move.id)
     else:
         form = MoveForm(instance=move)
