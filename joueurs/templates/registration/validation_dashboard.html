@@ -18,6 +18,9 @@
                         <tr>
                             <th>Nom</th>
                             <th>ID</th>
+                            <th>Créé par</th>
+                            <th>Checké par</th>
+                            <th>Date / Heure</th>
                             <th>Statut</th>
                             <th>Action</th>
                         </tr>
@@ -27,6 +30,27 @@
                             <tr>
                                 <td>{{ item }}</td>
                                 <td>{{ item.pk }}</td>
+                                <td>
+                                    {% if item.created_by %}
+                                        {{ item.created_by.user.username }}
+                                    {% else %}
+                                        &mdash;
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if item.updated_by and item.updated_by != item.created_by %}
+                                        {{ item.updated_by.user.username }}
+                                    {% else %}
+                                        &mdash;
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if item.updated_date %}
+                                        {{ item.updated_date|date:"d/m/Y H:i" }}
+                                    {% else %}
+                                        &mdash;
+                                    {% endif %}
+                                </td>
                                 <td><span class="badge bg-success">Validé</span></td>
                                 <td>
                                     <a href="{% url section.detail_url_name item.pk %}" class="btn btn-sm btn-info" title="Voir">
@@ -36,7 +60,7 @@
                             </tr>
                         {% empty %}
                             <tr>
-                                <td colspan="4" class="text-center">Aucun élément validé.</td>
+                                <td colspan="7" class="text-center">Aucun élément validé.</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -48,6 +72,9 @@
                         <tr>
                             <th>Nom</th>
                             <th>ID</th>
+                            <th>Créé par</th>
+                            <th>Checké par</th>
+                            <th>Date / Heure</th>
                             <th>Statut</th>
                             <th>Action</th>
                         </tr>
@@ -57,17 +84,37 @@
                             <tr>
                                 <td>{{ item }}</td>
                                 <td>{{ item.pk }}</td>
+                                <td>
+                                    {% if item.created_by %}
+                                        {{ item.created_by.user.username }}
+                                    {% else %}
+                                        &mdash;
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if item.updated_by and item.updated_by != item.created_by %}
+                                        {{ item.updated_by.user.username }}
+                                    {% else %}
+                                        &mdash;
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if item.updated_date %}
+                                        {{ item.updated_date|date:"d/m/Y H:i" }}
+                                    {% else %}
+                                        &mdash;
+                                    {% endif %}
+                                </td>
                                 <td><span class="badge bg-warning text-dark">En attente</span></td>
                                 <td>
                                     <a href="{% url section.detail_url_name item.pk %}" class="btn btn-sm btn-info" title="Voir">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <!-- Tu peux aussi ajouter un bouton de validation ici si tu veux -->
                                 </td>
                             </tr>
                         {% empty %}
                             <tr>
-                                <td colspan="4" class="text-center">Aucun élément en attente.</td>
+                                <td colspan="7" class="text-center">Aucun élément en attente.</td>
                             </tr>
                         {% endfor %}
                     </tbody>

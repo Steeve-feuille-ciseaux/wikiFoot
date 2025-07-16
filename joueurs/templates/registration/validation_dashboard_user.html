@@ -22,7 +22,8 @@
                                     <tr>
                                         <th>Nom</th>
                                         <th>ID</th>
-                                        <th>Modifié par</th>
+                                        <th>Checké par</th>
+                                        <th>Date / Heure</th>
                                         <th>Statut</th>
                                         <th>Action</th>
                                     </tr>
@@ -33,7 +34,18 @@
                                             <td>{{ item }}</td>
                                             <td>{{ item.pk }}</td>
                                             <td>
-                                                {{ item.updated_by.user.username }} <strong>le</strong> {{ item.updated_date|date:"d/m/Y H:i" }}
+                                                {% if item.updated_by and item.updated_by != item.created_by %}
+                                                    {{ item.updated_by.user.username }}
+                                                {% else %}
+                                                    &mdash;
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if item.updated_date %}
+                                                    {{ item.updated_date|date:"d/m/Y H:i" }}
+                                                {% else %}
+                                                    &mdash;
+                                                {% endif %}
                                             </td>
                                             <td><span class="badge bg-success">Validé</span></td>
                                             <td>
@@ -54,7 +66,8 @@
                                     <tr>
                                         <th>Nom</th>
                                         <th>ID</th>
-                                        <th>Modifié par</th>
+                                        <th>Checké par</th>
+                                        <th>Date / Heure</th>
                                         <th>Statut</th>
                                         <th>Action</th>
                                     </tr>
@@ -67,6 +80,13 @@
                                             <td>
                                                 {% if item.updated_by and item.updated_by != item.created_by %}
                                                     {{ item.updated_by.user.username }}
+                                                {% else %}
+                                                    &mdash;
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if item.updated_date %}
+                                                    {{ item.updated_date|date:"d/m/Y H:i" }}
                                                 {% else %}
                                                     &mdash;
                                                 {% endif %}

@@ -263,7 +263,7 @@ def ajouter_joueur(request):
                 joueur.updated_by = request.user.profile
 
             joueur.save()
-            messages.success(request, "Le joueur a bien été ajouté et en attente d'être validé.")
+            messages.warning(request, "Le joueur a bien été ajouté et en attente d'être validé.")
             return redirect('liste_joueurs')
     else:
         form = JoueurForm()
@@ -333,7 +333,7 @@ def ajouter_club(request):
                 club.updated_by = request.user.profile
 
             club.save()
-            messages.success(request, "Le club a bien été ajouté et en attente d'être validé.")
+            messages.warning(request, "Le club a bien été ajouté et en attente d'être validé.")
             return redirect('liste_clubs')
     else:
         form = ClubForm()
@@ -402,7 +402,7 @@ def ajouter_pays(request):
                 pays.updated_by = request.user.profile
 
             pays.save()
-            messages.success(request, "Le pays a bien été ajouté et en attente de validation.")
+            messages.warning(request, "Le pays a bien été ajouté et en attente de validation.")
             return redirect('liste_pays')
     else:
         form = CountryForm()
@@ -470,7 +470,7 @@ def ajouter_carte(request):
                 carte.updated_by = request.user.profile
 
             carte.save()
-            messages.success(request, "La carte a bien été ajoutée et est en attente de validation.")
+            messages.success(request, "La carte a bien été modifiée.")
             return redirect('liste_carte')
     else:
         form = CardForm()
@@ -489,7 +489,7 @@ def modifier_carte(request, carte_id):
                 carte.updated_by = request.user.profile
 
             carte.save()
-            messages.success(request, "La carte a bien été modifiée.")
+            messages.warning(request, "La carte a bien été ajoutée et est en attente de validation.")
             return redirect('detail_carte', pk=carte.id)
     else:
         form = CardForm(instance=carte)
@@ -538,7 +538,7 @@ def ajouter_move(request):
                 move.updated_by = request.user.profile
 
             move.save()
-            messages.success(request, "L'action a bien été ajoutée et est en attente de validation.")
+            messages.warning(request, "L'action a bien été ajoutée et est en attente de validation.")
             return redirect('liste_moves')
     else:
         form = MoveForm()
@@ -557,7 +557,7 @@ def modifier_move(request, move_id):
                 move.updated_by = request.user.profile
 
             move.save()
-            messages.success(request, "La carte a bien été ajoutée et est en attente de validation.")
+            messages.warning(request, "La carte a bien été ajoutée et est en attente de validation.")
             return redirect('move_detail', pk=move.id)
     else:
         form = MoveForm(instance=move)
