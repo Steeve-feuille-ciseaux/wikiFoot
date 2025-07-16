@@ -22,6 +22,7 @@
                                     <tr>
                                         <th>Nom</th>
                                         <th>ID</th>
+                                        <th>Modifié par</th>
                                         <th>Statut</th>
                                         <th>Action</th>
                                     </tr>
@@ -31,6 +32,9 @@
                                         <tr>
                                             <td>{{ item }}</td>
                                             <td>{{ item.pk }}</td>
+                                            <td>
+                                                {{ item.updated_by.user.username }} <strong>le</strong> {{ item.updated_date|date:"d/m/Y H:i" }}
+                                            </td>
                                             <td><span class="badge bg-success">Validé</span></td>
                                             <td>
                                                 <a href="{% url section.detail_url_name item.pk %}" class="btn btn-sm btn-info" title="Voir">
@@ -50,6 +54,7 @@
                                     <tr>
                                         <th>Nom</th>
                                         <th>ID</th>
+                                        <th>Modifié par</th>
                                         <th>Statut</th>
                                         <th>Action</th>
                                     </tr>
@@ -59,6 +64,13 @@
                                         <tr>
                                             <td>{{ item }}</td>
                                             <td>{{ item.pk }}</td>
+                                            <td>
+                                                {% if item.updated_by and item.updated_by != item.created_by %}
+                                                    {{ item.updated_by.user.username }}
+                                                {% else %}
+                                                    &mdash;
+                                                {% endif %}
+                                            </td>
                                             <td><span class="badge bg-warning text-dark">En attente</span></td>
                                             <td>
                                                 <a href="{% url section.detail_url_name item.pk %}" class="btn btn-sm btn-info" title="Voir">
@@ -70,6 +82,7 @@
                                 </tbody>
                             </table>
                         {% endif %}
+
                     </div>
                 </div>
             {% endif %}
