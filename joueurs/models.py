@@ -424,11 +424,10 @@ class Stade(models.Model):
     capacity = models.IntegerField(null=True, blank=True)
     histoire = models.TextField(null=True, blank=True)  # 🔄 ajout
     club = models.OneToOneField('Club', on_delete=models.SET_NULL, null=True, blank=True, related_name='stadium_owned')
-    federation = models.OneToOneField('Country', on_delete=models.SET_NULL, null=True, blank=True, related_name='stade_federation')
 
     def clean(self):
-        if (self.club and self.federation) or (not self.club and not self.federation):
-            raise ValidationError("Un stade doit appartenir soit à un club, soit à une fédération (pas les deux, ni aucun).")
+        if not self.club:
+            raise ValidationError("Un stade doit appartenir à un club.")
 
     def __str__(self):
         return self.name
