@@ -12,7 +12,7 @@ class Continent(models.Model):
 
 class Country(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    capital = models.CharField(max_length=100, null=True, blank=True)
+    capital = models.OneToOneField('City', on_delete=models.SET_NULL, null=True, blank=True, related_name='country_capital')
     flag = models.ImageField(upload_to='drapeau/') 
     culture = models.TextField(max_length=100, null=True, blank=True)
     continent = models.ForeignKey(Continent, on_delete=models.CASCADE)
@@ -71,7 +71,7 @@ class Card(models.Model):
     name = models.CharField(max_length=100)
     numero = models.IntegerField()
     position = models.CharField(max_length=100)
-    club = models.ForeignKey('Club', on_delete=models.CASCADE, related_name='cards', null=True, blank=True)
+    club = models.ForeignKey('Club', on_delete=models.CASCADE, null=True, blank=True, related_name='card_clubs')
     national_team = models.ForeignKey('NationalTeam', on_delete=models.CASCADE, related_name='cards', null=True, blank=True)
     img = models.ImageField(upload_to='imgCard/', null=True, blank=True)
     resume = models.TextField()
@@ -132,10 +132,10 @@ class Club(models.Model):
     name = models.CharField(max_length=100)
     blazon = models.ImageField(upload_to='club/', null=True, blank=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='clubs')
+    city = models.ForeignKey('City', on_delete=models.SET_NULL, null=True, blank=True, related_name='clubs') 
     story = models.TextField(unique=True)
     rival = models.OneToOneField('self', on_delete=models.SET_NULL, null=True, blank=True)
-    # card_player = models.OneToOneField(Card, on_delete=models.SET_NULL, null=True, blank=True, unique=True)
-    stade = models.CharField(max_length=100)
+    stade = models.ForeignKey('Stade', on_delete=models.SET_NULL, null=True, blank=True, related_name='clubs_stadium')
     visible = models.BooleanField(default=False)
 
     # Suivi
@@ -145,7 +145,7 @@ class Club(models.Model):
     updated_date = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
-        return self.name   
+        return self.name
 
     class Meta:
         constraints = [
@@ -403,3 +403,32 @@ class Match(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['name', 'date'], name='unique_match_name_date')
         ]
+
+class City(models.Model):
+    name = models.CharField(max_length=100)
+    country = models.ForeignKey('Country', on_delete=models.SET_NULL, null=True, blank=True, related_name='cities')
+    culture = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.country.name if self.country else 'Sans pays'})"
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name', 'country'], name='unique_city_per_country')
+        ]
+
+class Stade(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    city = models.ForeignKey('City', on_delete=models.CASCADE, related_name='stades')  # 🔄 remplace location
+    country = models.ForeignKey('Country', on_delete=models.SET_NULL, null=True, blank=True, related_name='stades')  # 🔄 ajout
+    capacity = models.IntegerField(null=True, blank=True)
+    histoire = models.TextField(null=True, blank=True)  # 🔄 ajout
+    club = models.OneToOneField('Club', on_delete=models.SET_NULL, null=True, blank=True, related_name='stadium_owned')
+    federation = models.OneToOneField('Country', on_delete=models.SET_NULL, null=True, blank=True, related_name='stade_federation')
+
+    def clean(self):
+        if (self.club and self.federation) or (not self.club and not self.federation):
+            raise ValidationError("Un stade doit appartenir soit à un club, soit à une fédération (pas les deux, ni aucun).")
+
+    def __str__(self):
+        return self.name

@@ -36,6 +36,7 @@ v0.08.1 = Update Feature : sous-menu historique améliorer avec l'user, date et 
 v0.08.1.1 = Update template : afficher les rôles utilisateur en français avec ROLE_CHOICES du models.py
 v0.08.1.2 = protect project : ajout de commande dans patch note + créer fichier des dépendance
 v0.08.2 = New Update : ajout du match dans models afin de préparer la narration des match et compétition
+v0.08.3 = Update DB -> ajout ville et stade, lien dynamique avec les club et pays
 
 ** Next step **
 Notification : être informer dans l'onglet son contenu modifier, accepté où refuser
