@@ -76,8 +76,8 @@ class Card(models.Model):
     img = models.ImageField(upload_to='imgCard/', null=True, blank=True)
     resume = models.TextField()
     statut = models.BooleanField(default=True)
-    stade = models.CharField(max_length=100)
-    match = models.CharField(max_length=100)
+    stade = models.CharField(max_length=100, null=True, blank=True)
+    match = models.ForeignKey('Match', on_delete=models.SET_NULL, null=True, blank=True)
     date = models.DateTimeField()
     visible = models.BooleanField(default=False)
 
@@ -355,3 +355,51 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.get_role_display()} (Rang {self.rank})"
+    
+    
+class Match(models.Model):
+    name = models.CharField(max_length=100)  # Ex: "Finale Coupe du Monde 2018"
+    date = models.DateTimeField()
+
+    # Participants (clubs OU équipes nationales)
+    club1 = models.ForeignKey('Club', on_delete=models.SET_NULL, null=True, blank=True, related_name='home_matches')
+    club2 = models.ForeignKey('Club', on_delete=models.SET_NULL, null=True, blank=True, related_name='away_matches')
+    national_team1 = models.ForeignKey('NationalTeam', on_delete=models.SET_NULL, null=True, blank=True, related_name='home_national_matches')
+    national_team2 = models.ForeignKey('NationalTeam', on_delete=models.SET_NULL, null=True, blank=True, related_name='away_national_matches')
+
+    # Score
+    score_team1 = models.IntegerField(null=True, blank=True)
+    score_team2 = models.IntegerField(null=True, blank=True)
+
+    # Contexte
+    competition = models.ForeignKey('Competition', on_delete=models.SET_NULL, null=True, blank=True, related_name='matches')
+    context = models.TextField(null=True, blank=True)
+    resume = models.TextField(null=True, blank=True)
+    visible = models.BooleanField(default=False)
+
+    def __str__(self):
+        team1 = self.club1.name if self.club1 else self.national_team1.name if self.national_team1 else "Équipe 1"
+        team2 = self.club2.name if self.club2 else self.national_team2.name if self.national_team2 else "Équipe 2"
+        return f"{team1} vs {team2} - {self.name}"
+
+    def clean(self):
+        # Un match doit opposer deux clubs OU deux nations, pas un mix
+        is_club_match = self.club1 or self.club2
+        is_national_match = self.national_team1 or self.national_team2
+
+        if is_club_match and is_national_match:
+            raise ValidationError("Un match doit être entre deux clubs OU deux équipes nationales, pas les deux.")
+        
+        if (self.club1 and not self.club2) or (self.club2 and not self.club1):
+            raise ValidationError("Les deux clubs doivent être renseignés pour un match de club.")
+        
+        if (self.national_team1 and not self.national_team2) or (self.national_team2 and not self.national_team1):
+            raise ValidationError("Les deux équipes nationales doivent être renseignées pour un match international.")
+        
+        if not (self.club1 and self.club2) and not (self.national_team1 and self.national_team2):
+            raise ValidationError("Un match doit avoir deux clubs OU deux équipes nationales.")
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name', 'date'], name='unique_match_name_date')
+        ]

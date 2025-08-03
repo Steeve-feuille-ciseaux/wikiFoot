@@ -35,6 +35,8 @@ v0.08.0.1 = Update template : validation_dashboard_user.html possède Modifié p
 v0.08.1 = Update Feature : sous-menu historique améliorer avec l'user, date et heure
 v0.08.1.1 = Update template : afficher les rôles utilisateur en français avec ROLE_CHOICES du models.py
 v0.08.1.2 = protect project : ajout de commande dans patch note + créer fichier des dépendance
+v0.08.2 = New Update : ajout du match dans models afin de préparer la narration des match et compétition
+
 ** Next step **
 Notification : être informer dans l'onglet son contenu modifier, accepté où refuser
 Notification : envoyer un e-mail ou signal lors d’une validation.
@@ -52,11 +54,13 @@ python -m venv env
 env\Scripts\activate
 deactivate
 where python
+
 findstr /s /i "import " *.py
 pip list
 pip freeze > requirements.txt
 pip install -r requirements.txt
 pip show django
+
 python manage.py createsuperuser
 python manage.py makemigrations
 python manage.py migrate
