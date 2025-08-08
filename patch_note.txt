@@ -37,6 +37,8 @@ v0.08.1.1 = Update template : afficher les rôles utilisateur en français avec 
 v0.08.1.2 = protect project : ajout de commande dans patch note + créer fichier des dépendance
 v0.08.2 = New Update : ajout du match dans models afin de préparer la narration des match et compétition
 v0.08.3 = Update DB -> ajout ville et stade, lien dynamique avec les club et pays
+v0.08.3.1 = Correction bug -> attribut federation 
+v0.09.0 = New Feature : Story Telling appliqué sur Club 
 
 ** Next step **
 Notification : être informer dans l'onglet son contenu modifier, accepté où refuser
@@ -70,3 +72,4 @@ python manage.py runserver
 
 ** MEMO REPRISE ** 
 bug trouvé mettre le patch dans l'urls appl et non général
+Si tu es fan, raconte l'histoire. FanZone Football

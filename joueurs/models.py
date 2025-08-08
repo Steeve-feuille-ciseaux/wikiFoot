@@ -137,6 +137,7 @@ class Club(models.Model):
     rival = models.OneToOneField('self', on_delete=models.SET_NULL, null=True, blank=True)
     stade = models.ForeignKey('Stade', on_delete=models.SET_NULL, null=True, blank=True, related_name='clubs_stadium')
     visible = models.BooleanField(default=False)
+    storytelling = models.OneToOneField('Story', on_delete=models.SET_NULL, null=True, blank=True)
 
     # Suivi
     created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='clubs_created')
@@ -431,3 +432,21 @@ class Stade(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Story(models.Model):
+    name = models.CharField(max_length=255)
+    intro = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+class Telling(models.Model):
+    story = models.ForeignKey(Story, on_delete=models.CASCADE, related_name='tellings')
+    text_telling = models.TextField()
+    img_telling = models.ImageField(upload_to='story/', null=True, blank=True)
+
+    def __str__(self):
+        tellings = list(self.story.tellings.order_by('id'))
+        index = tellings.index(self) + 1  # position de ce telling
+        last_index = len(tellings)  # total des tellings pour cette story
+        return f"{index} / {last_index} - {self.story.name}"

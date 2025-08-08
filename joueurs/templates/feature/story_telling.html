@@ -1,0 +1,57 @@
+
+{% load static %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/story_telling.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>{{ story.name }}</h1>
+    <p>{{ story.intro }}</p>
+
+    <!-- Texte complet divisé -->
+    <div id="texte-complet" style="display: none;">
+        {% for telling in tellings %}
+            <div class="paragraphe" data-index="{{ forloop.counter0 }}">
+                {{ telling.text_telling|linebreaks }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <button id="lireSuiteBtn">Découvrir l'histoire complète</button>
+</div>
+
+<!-- Modale -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <button class="close-btn" id="closeBtn">×</button>
+
+        {% for telling in tellings %}
+            {% if telling.img_telling %}
+                <img class="modal-image" data-index="{{ forloop.counter0 }}" src="{{ telling.img_telling.url }}" alt="Illustration {{ forloop.counter }}" />
+            {% endif %}
+        {% endfor %}
+
+        <div class="modal-overlay"></div>
+
+        <div class="modal-text-container">
+            <div id="modalTexte"></div>
+            <div class="modal-footer">
+                <button class="nav-btn nav-btn-left hidden" id="precedentBtn">← Précédent</button>
+                <span id="progression">Page 1/{{ tellings|length }}</span>
+                <button class="nav-btn nav-btn-right" id="suivantBtn">Suivant →</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<div class="mt-4">
+    <a href="javascript:history.back()" class="btn btn-secondary">← Retour</a>
+</div>
+
+
+{% block scripts %}
+    <script src="{% static 'js/storyTelling.js' %}"></script>
+{% endblock %}

@@ -1,10 +1,8 @@
 from django.urls import path
 from . import views
-from .views import register, liste_utilisateurs
+from .views import register, liste_utilisateurs, CustomPasswordChangeView, tableau_validation_utilisateur, story_telling
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
-from .views import CustomPasswordChangeView
-from .views import tableau_validation_utilisateur
 
 urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
@@ -78,6 +76,9 @@ urlpatterns = [
     path('moves/supprimer/<int:pk>/', views.supprimer_move, name='supprimer_move'),
     path('moves/en-attente/', views.waiting_moves, name='waiting_moves'),
     path('move/valider/<int:pk>/', views.valider_move, name='valider_move'),
+
+    # Story Telling
+    path('story/<str:model_name>/<int:pk>/', story_telling, name='story_telling'),
 
     path('', views.home, name=''),
 ]

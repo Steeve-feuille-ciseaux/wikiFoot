@@ -1,11 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CustomUserCreationForm
-from .models import Profile
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
-from .models import Joueur, Club, Country, Card, Move, Entraineur
+from .models import Joueur, Club, Country, Card, Move, Entraineur, Story, Profile
 from .forms import JoueurForm, ClubForm, CountryForm, CardForm, MoveForm, EntraineurForm
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -230,11 +229,7 @@ def recherche(request):
             Q(first_name__icontains=query) | Q(last_name__icontains=query)
         )
 
-    return render(request, 'recherche_resultats.html', {
-        'query': query,
-        'joueurs': joueurs,
-        'entraineurs': entraineurs,
-    })
+    return render(request, 'feature/recherche_resultats.html', {'query': query, 'joueurs': joueurs, 'entraineurs': entraineurs})
 
 # Onglet Joueurs
 def liste_joueurs(request):
@@ -650,3 +645,28 @@ def valider_entraineur(request, pk):
     messages.success(request, "L'entraîneur a été validé avec succès.")
 
     return redirect('liste_entraineurs')
+
+def story_telling(request, model_name, pk):
+    model_map = {
+        'club': Club,
+        'pays': Country,
+        'joueur': Joueur,
+        'entraineur': Entraineur,
+    }
+
+    model = model_map.get(model_name.lower())
+    if not model:
+        messages.error(request, "Type d'objet invalide.")
+        return redirect('home')
+
+    obj = get_object_or_404(model, pk=pk)
+
+    story = getattr(obj, 'storytelling', None)
+    tellings = story.tellings.all() if story else []
+
+    context = {
+        'entity': obj,
+        'story': story,
+        'tellings': tellings,
+    }
+    return render(request, 'feature/story_telling.html', context)
