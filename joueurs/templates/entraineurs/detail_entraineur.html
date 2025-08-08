@@ -59,6 +59,14 @@
                     <p><strong>Checké par :</strong> {{ entraineur.updated_by.user.username }} <strong>à</strong> {{ entraineur.updated_date|date:"d/m/Y H:i" }}</p>
                 {% endif %}
             {% endif %}
+
+            {% if entraineur.storytelling %}
+                <a href="{% url 'story_telling' 'entraineur' entraineur.pk %}" class="btn btn-primary">
+                    📖 Voir l'histoire détaillée
+                </a>
+            {% else %}
+                <p class="text-muted">❌ Pas d'histoire détaillée</p>
+            {% endif %}
         </div>
 
         <div class="card-footer bg-white border-top-0 d-flex justify-content-between">

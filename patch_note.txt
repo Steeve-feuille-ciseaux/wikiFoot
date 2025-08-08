@@ -39,6 +39,7 @@ v0.08.2 = New Update : ajout du match dans models afin de préparer la narration
 v0.08.3 = Update DB -> ajout ville et stade, lien dynamique avec les club et pays
 v0.08.3.1 = Correction bug -> attribut federation 
 v0.09.0 = New Feature : Story Telling appliqué sur Club 
+v0.09.1 = Update Feature : Story Telling appliqué sur Pays, Joueur, Entraineur
 
 ** Next step **
 Notification : être informer dans l'onglet son contenu modifier, accepté où refuser

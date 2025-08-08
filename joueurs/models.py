@@ -19,6 +19,7 @@ class Country(models.Model):
     federation = models.CharField(max_length=100, unique=True, null=True, blank=True)
     logo_federation = models.ImageField(upload_to='federation/', null=True, blank=True)
     visible = models.BooleanField(default=False)
+    storytelling = models.OneToOneField('Story', on_delete=models.SET_NULL, null=True, blank=True)
 
     # Suivi
     created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='pays_created')
@@ -50,7 +51,8 @@ class Joueur(models.Model):
     # club = models.ForeignKey('Club', on_delete=models.SET_NULL, null=True, blank=True)
     # card = models.ForeignKey('Card', on_delete=models.SET_NULL, null=True, blank=True)
     # national_team = models.ForeignKey('NationalTeam', on_delete=models.SET_NULL, null=True, blank=True)
-    visible = models.BooleanField(default=False)
+    visible = models.BooleanField(default=False)    
+    storytelling = models.OneToOneField('Story', on_delete=models.SET_NULL, null=True, blank=True)
 
     # Suivi
     created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='joueurs_created')
@@ -297,6 +299,7 @@ class Entraineur(models.Model):
     resume = models.TextField(null=True, blank=True)
     career_player = models.OneToOneField('Joueur', on_delete=models.SET_NULL, null=True, blank=True, related_name='entraineur_carriere')
     visible = models.BooleanField(default=False)
+    storytelling = models.OneToOneField('Story', on_delete=models.SET_NULL, null=True, blank=True)
 
     # Suivi
     created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='entraineurs_created')

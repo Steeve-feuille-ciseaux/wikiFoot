@@ -62,6 +62,15 @@
                             </div>
                         </div>
                     {% endif %}
+
+                    {% if joueur.storytelling %}
+                        <a href="{% url 'story_telling' 'joueur' joueur.pk %}" class="btn btn-primary">
+                            📖 Voir l'histoire détaillée
+                        </a>
+                    {% else %}
+                        <p class="text-muted">❌ Pas d'histoire détaillée</p>
+                    {% endif %}
+
                 </div>
 
                 {% if user.is_authenticated and user.profile.rank >= 2 %}
