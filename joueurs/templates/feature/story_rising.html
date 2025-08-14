@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'css/story_rising.css' %}">
+{% endblock %}
+
+{% block body %}
+
+<h1 id="main-title">{{ competition.name }}</h1>
+
+<div class="timeline-container">
+
+  <button id="next-btn">Match suivant</button>
+
+  <div class="timeline" id="timeline">
+
+    <!-- Intro fixe -->
+    <div class="timeline-intro">
+      <div class="intro-content">
+        <h3>Tout commence ici...</h3>
+        <p>Une équipe, un rêve, une ascension vers la gloire.</p>
+        <a href="#narration-intro" class="narration-btn">
+          ▶ Voir la narration
+        </a>
+      </div>
+    </div>
+
+    {% for block in ordered_blocks %}
+      {% if block.type == 'rising' %}
+        {% with story=block.data %}
+        <div class="timeline-item {% cycle 'text-left' 'text-right' %} hidden">
+          <div class="content">
+            <h3>{{ story.name_rising }}</h3>
+            <small>{{ story.date|default_if_none:"" }}</small>  {# Ajouter si tu veux une date #}
+            <p>{{ story.intro_rising }}</p>
+
+            {% if story.tellings.all %}
+              <a href="#narration-{{ story.id }}" class="narration-btn">
+                ▶ Voir la narration
+              </a>
+            {% endif %}
+          </div>
+          <div class="image">
+            {% if story.img_rising %}
+              <img src="{{ story.img_rising.url }}" alt="{{ story.name_rising }}">
+            {% endif %}
+          </div>
+        </div>
+        {% endwith %}
+      
+      {% elif block.type == 'match' %}
+        {% with match=block.data %}
+        <div class="timeline-item {% cycle 'text-left' 'text-right' %} hidden">
+          <div class="content">
+            <h3>{{ match.name }}</h3>
+            <small>{{ match.match.date|date:"Y" }}</small>
+            <p>{{ match.match.summary }}</p>
+
+            <a href="#narration-match-{{ match.id }}" class="narration-btn">
+              ▶ Voir la narration
+            </a>
+          </div>
+          <div class="image">
+            {% if match.match.image %}
+              <img src="{{ match.match.image.url }}" alt="{{ match.name }}">
+            {% endif %}
+          </div>
+        </div>
+        {% endwith %}
+      {% endif %}
+    {% endfor %}
+
+    <!-- Fin : section victoire -->
+    <div class="victory-section hidden" id="end-message">
+      <div class="victory-image left">
+        <img src="https://images.unsplash.com/photo-1508780709619-79562169bc64?w=400&h=250&fit=crop&crop=center" alt="Célébration à gauche">
+        <a href="#narration-victoire" class="narration-btn">
+          ▶ Voir la narration
+        </a>
+      </div>
+      <div class="center-message">
+        <h2>Finale ! 🏆</h2>
+        <p>L'histoire s'achève sur un moment de gloire.</p>
+        <a href="#narration-victoire" class="narration-btn">
+          ▶ Voir la narration
+        </a>
+      </div>
+      <div class="victory-image right">
+        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=400&h=250&fit=crop&crop=center" alt="Célébration à droite">
+        <a href="#narration-victoire" class="narration-btn">
+          ▶ Voir la narration
+        </a>
+      </div>
+    </div>
+
+    <button id="celebration-btn" class="hidden">Célébration 🎉</button>
+
+  </div>
+</div>
+
+<!-- Popup victoire -->
+<div class="congrats-message" id="congrats-msg">
+  <div class="congrats-overlay">
+    <button class="close-popup" id="close-popup">✕</button>
+    <p class="victory-text">Tu as remporté la victoire finale !</p>
+    <a href="#narration-victoire">
+      <button class="celebration-btn" id="close-congrats">Voir la célébration 🎉</button>
+    </a>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/popUp.js' %}"></script>
+<script src="{% static 'js/storyRising.js' %}"></script>
+{% endblock %}

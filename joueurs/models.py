@@ -453,3 +453,38 @@ class Telling(models.Model):
         index = tellings.index(self) + 1  # position de ce telling
         last_index = len(tellings)  # total des tellings pour cette story
         return f"{index} / {last_index} - {self.story.name}"
+    
+# A Revoir !!!!
+class CompetitionStory(models.Model):
+    name = models.CharField(max_length=255)  # Ex : "Ascension vers la gloire 2023"
+
+    def __str__(self):
+        return self.name
+
+class RisingStory(models.Model):
+    competition_story = models.ForeignKey(CompetitionStory, on_delete=models.CASCADE, related_name='rising_stories')
+    name_rising = models.CharField(max_length=255)  # Titre : ex "Formation de l'équipe"
+    intro_rising = models.TextField()               # Paragraphe introductif
+    img_rising = models.ImageField(upload_to='risingStory/', null=True, blank=True)  # Image de l'étape
+
+    def __str__(self):
+        return f"{self.name_rising} ({self.competition_story.name})"
+
+class RisingTelling(models.Model):
+    rising_story = models.ForeignKey(RisingStory, on_delete=models.CASCADE, related_name='tellings')
+    text_telling = models.TextField()
+    img_telling = models.ImageField(upload_to='risingTelling/', null=True, blank=True)
+
+    def __str__(self):
+        tellings = list(self.rising_story.tellings.order_by('id'))
+        index = tellings.index(self) + 1
+        total = len(tellings)
+        return f"{index} / {total} - {self.rising_story.name_rising}"
+
+class MatchStory(models.Model):
+    competition_story = models.ForeignKey(CompetitionStory, on_delete=models.CASCADE, related_name='match_stories')
+    name = models.CharField(max_length=255)  # ex : "Premier tournoi"
+    match = models.ForeignKey('Match', on_delete=models.CASCADE, related_name='story_matches')
+
+    def __str__(self):
+        return f"{self.name} ({self.competition_story.name})"

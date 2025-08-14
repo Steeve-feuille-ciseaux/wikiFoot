@@ -41,8 +41,10 @@ v0.08.3.1 = Correction bug -> attribut federation
 v0.09.0 = New Feature : Story Telling appliqué sur Club 
 v0.09.1 = Update Feature : Story Telling appliqué sur Pays, Joueur, Entraineur
 v0.09.1.1 = Update template : rectif histoire intéractif
+v0.10.0 = New Feature : Pré-requis Narration compétition
 
 ** Next step **
+TESTER les fichier implanté 
 Notification : être informer dans l'onglet son contenu modifier, accepté où refuser
 Notification : envoyer un e-mail ou signal lors d’une validation.
 vérifier à nouveau les conditions de validation de chaque table
